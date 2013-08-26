@@ -40,7 +40,7 @@ The "simple yet fun" mechanic needs to be nailed down though...
 
 * cabin staff not around
 
-* distractions (baby crying, snoring, ...)
+* distractions (baby crying, snoring, ...)  Maybe you have a wing-person character that can create distractions? (Throw a fit, fight with other passengers, play sick)
 
 * turbulence (everyone needs to return to their seats)
 
@@ -57,3 +57,51 @@ The "simple yet fun" mechanic needs to be nailed down though...
 * picking up cabin staff
 
 * trying to do the deed in the 1st class cabin lavatory
+
+## Sketches
+
+X   = You
+x   = Another Person
+O   = Cabin Staff
+| | = Lavatory
+#   = Plane body
+
+Rules:
+
+* Empty seats are opportunities to meet people
+
+* Once you meet someone, you then want to get to the lavatory.
+
+* You get points for length of time in lavatory and a bonus when an an O happens!
+
+* Maybe you have a wing-person that can create distractions?
+
+Obstacles:
+
+* People randomly get up from their seat to go to bathroom
+
+* Cabin Staff come through cabin at regular intervals and may knock on the door
+
+* Cabin Staff may see if you enter bathroom with a companion
+
+* Turbulence means everyone has to sit down (unless you're about to enter lavatory)
+
+* Queues can form. People will get angry if you're in there too long.
+
+* Lavatories may be uninhabitable in some cases.
+
+* Friends or spouses may wonder where you are.
+
+#########################################
+###### [ ] [ ] [x] [ ] [ ] [ ] [ ] [ ]
+###### [ ] [ ] [x] [ ] [ ] [ ] [ ] [ ]
+                  O ===>
+                <=== O
+| || | [ ] [ ] [ ] [x] [ ] [X] [ ] [ ]
+------ [ ] [ ] [ ] [ ] [ ] [x] [ ] [ ]
+| || | [ ] [ ] [ ] [x] [ ] [ ] [ ] [ ]
+
+
+###### [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]
+###### [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]
+#########################################
