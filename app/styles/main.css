@@ -3,7 +3,7 @@ body {
   color:#0d0;
   font-family:courier;
 }
-#game {
+canvas {
   width:980px;
   height:400px;
   margin:0 auto;

@@ -1,38 +1,50 @@
 !function() {
   var game = new function game()  {
-    var board = document.createElement('div'),
+    var board = document.createElement('canvas'),
+        ctx = board.getContext('2d'),
         setup = !function setup() {
-          board.id = 'game';
+          board.width = '980';
+          board.height = '400';
           document.body.appendChild(board);
         }();
 
+    function renderSeat() {
+      ctx.fillRect(Math.floor(Math.random() * 880), (Math.random() * 380),20,20);
+    }
+
     function makeEmptySeat() {
-      var el = document.createElement('span');
-      el.innerHTML = '[ ]';
-      return el; 
+      ctx.fillStyle="#0F0";
     }
 
     function makeFullSeat() {
-      var el = makeEmptySeat();
-      el.innerHTML = '[x]';
-      return el;
+      ctx.fillStyle="#080";
     }
 
     function makeRandomSeat() {
       if (Math.floor(Math.random() * 2)) {
-        return makeFullSeat();
+        makeFullSeat();
       } else {
-        return makeEmptySeat();
+        makeEmptySeat();
+      }
+      renderSeat();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, board.width, board.height);
+      var seatsToDraw = 100;
+      while (seatsToDraw) {
+        makeRandomSeat();
+        seatsToDraw--; 
       }
     }
 
+    function loop() {
+      requestAnimationFrame(loop);
+      tick();
+    }
+
     this.start = function start() {
-      var empty, full = document.createElement('span'),
-          seatsToDraw = 10;;
-      while (seatsToDraw) {
-        board.appendChild(makeRandomSeat());
-        seatsToDraw--; 
-      }
+      loop();
     };
   };
   game.start();
