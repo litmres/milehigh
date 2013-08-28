@@ -1,3 +1,4 @@
+/*jshint indent:4 */
 // Generated on 2013-08-27 using generator-webapp 0.3.1
 'use strict';
 var LIVERELOAD_PORT = 35729;

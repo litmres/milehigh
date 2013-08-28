@@ -1,51 +1,31 @@
-!function() {
-  var game = new function game()  {
-    var board = document.createElement('canvas'),
-        ctx = board.getContext('2d'),
-        setup = !function setup() {
-          board.width = '980';
-          board.height = '400';
-          document.body.appendChild(board);
-        }();
+/*globals MileHigh, requestAnimationFrame */
 
-    function renderSeat() {
-      ctx.fillRect(Math.floor(Math.random() * 880), (Math.random() * 380),20,20);
-    }
+'use strict';
 
-    function makeEmptySeat() {
-      ctx.fillStyle="#0F0";
-    }
+(function() {
+  var board = document.createElement('canvas'),
+  ctx = board.getContext('2d');
 
-    function makeFullSeat() {
-      ctx.fillStyle="#080";
-    }
+  (function setup() {
+    board.width = '980';
+    board.height = '400';
+    document.body.appendChild(board);
+  })();
 
-    function makeRandomSeat() {
-      if (Math.floor(Math.random() * 2)) {
-        makeFullSeat();
-      } else {
-        makeEmptySeat();
-      }
-      renderSeat();
-    }
+  var game = new MileHigh();
 
-    function tick() {
-      ctx.clearRect(0, 0, board.width, board.height);
-      var seatsToDraw = 100;
-      while (seatsToDraw) {
-        makeRandomSeat();
-        seatsToDraw--; 
-      }
-    }
+  function tick() {
+    game.renderPlane(ctx, game.planeLayout, board.width, board.height);
+    game.renderTravelers(ctx, game.travelers, board.width, board.height);
+  }
 
-    function loop() {
-      requestAnimationFrame(loop);
-      tick();
-    }
+  function loop() {
+    requestAnimationFrame(loop);
+    tick();
+  }
 
-    this.start = function start() {
-      loop();
-    };
-  };
-  game.start();
-}();
+  function start() {
+    loop();
+  }
+  start();
+})();
