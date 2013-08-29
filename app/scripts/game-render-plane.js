@@ -4,32 +4,56 @@
 
 MileHigh.prototype.renderPlane = function (ctx, planeLayout, boardWidth, boardHeight) {
 
-  function renderSeat() {
-    ctx.fillRect(Math.floor(Math.random() * 880), (Math.random() * 380),20,20);
+  var PIECE_SIZE = 25;    // 20 pixels high and wide
+
+  function renderSimpleSquare (row, col, fillStyle) {
+    var y = row * PIECE_SIZE,
+      x = col * PIECE_SIZE;
+
+    // padding
+    y += 1;
+    x += 1;
+    var width = PIECE_SIZE - 2,
+      height = PIECE_SIZE - 2;
+
+    ctx.fillStyle = fillStyle;
+    ctx.fillRect(x, y, width, height);
   }
 
-  function makeEmptySeat() {
-    ctx.fillStyle='#0F0';
+  function renderSeat (row, col) {
+    renderSimpleSquare(row, col, '#080');
   }
 
-  function makeFullSeat() {
-    ctx.fillStyle='#080';
+  function renderLavatory (row, col) {
+    renderSimpleSquare(row, col, '#0D0');
   }
 
-  function makeRandomSeat() {
-    if (Math.floor(Math.random() * 2)) {
-      makeFullSeat();
-    } else {
-      makeEmptySeat();
-    }
-    renderSeat();
+  function renderWall (row, col) {
+    renderSimpleSquare(row, col, '#888');
+  }
+
+  function renderIsle (row, col) {
+    renderSimpleSquare(row, col, '#000');
   }
 
   ctx.clearRect(0, 0, boardWidth, boardHeight);
-  var seatsToDraw = 100;
-  while (seatsToDraw) {
-    makeRandomSeat();
-    seatsToDraw--;
-  }
 
+  for (var row = 0; row < planeLayout.length; row++) {
+    for (var col = 0; col < planeLayout[0].length; col++) {
+      switch (planeLayout[row][col]) {
+      case 'O':
+        renderSeat(row, col);
+        break;
+      case ' ':
+        renderIsle(row, col);
+        break;
+      case '+':
+        renderLavatory(row, col);
+        break;
+      default:
+        renderWall(row, col);
+        break;
+      }
+    }
+  }
 };
