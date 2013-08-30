@@ -7,12 +7,19 @@
 */
 MileHigh.prototype.initRandomTravelersAtSpecificSeats = function (params) {
 
-	var planeLayout = params.planeLayout,
-		totalTravelers = params.totalTravelers;
+  var planeLayout = params.planeLayout,
+    totalTravelers = params.totalTravelers,
+    seatTaken,
+    seatToTry;
 
   this.travelers = [];
 
   for (var traveler=0; traveler < totalTravelers; traveler++) {
-    this.travelers.push(planeLayout.findRandomSeat());
+    seatTaken = true;
+    while (seatTaken) {
+      seatToTry = planeLayout.findRandomSeat();
+      seatTaken = planeLayout.isSeatTaken(seatToTry, this.travelers);
+    }
+    this.travelers.push(seatToTry);
   }
 };

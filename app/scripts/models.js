@@ -40,3 +40,15 @@ PlaneLayout.prototype.findRandomSeat = function () {
     }
   }
 };
+
+/*
+  A seat is in this format: { row: 1, col: 2 }
+  */
+PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
+
+  for (var t=0; t < arrayOfExistingSeats.length; t++) {
+    if ((seat.row === arrayOfExistingSeats[t].row) && (seat.col === arrayOfExistingSeats[t].col)) {
+      return true;
+    }
+  }
+};
