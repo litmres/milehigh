@@ -23,4 +23,5 @@ var MileHigh = function () {
       totalTravelers: TOTAL_TRAVELERS }
   );
   this.player = this.initPlayer(this.planeLayout);
+  this.controls = this.initControls(this.player);
 };
