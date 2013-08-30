@@ -6,16 +6,37 @@ var MileHigh = function () {
 
   var TOTAL_TRAVELERS = 20;
 
-	var planeLayoutIn =
-      [ '####O O O O O O O O O O O O O O O O O ',
-        '####O O O O O O O O O O O O O O O O O ',
-        '                                      ',
-        '+#+#O O O O O O O O O O O O O O O O O ',
-        '####O O O O O O O O O O O O O O O O O ',
-        '+#+#O O O O O O O O O O O O O O O O O ',
-        '                                      ',
-        '####O O O O O O O O O O O O O O O O O ',
-        '####O O O O O O O O O O O O O O O O O ' ];
+  var seven6seven = [
+    '#OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO###',
+    '+OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO+#+',
+    '                                       ',
+    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO+#',
+    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO##',
+    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO+#',
+    '                                       ',
+    '+OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO+#+',
+    '#OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO###',
+  ];
+
+  var crj700 = [
+    '# OOOOOOOOOOO OOOOO###',
+    '# OOOOOOOOOOO OOOOO#+#',
+    '                      ',
+    '# OOOOOOOOOOO OOOOOOOO',
+    '# OOOOOOOOOOO OOOOOOOO',
+  ];
+
+  var seven3seven = [
+    '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###',
+    '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###',
+    '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO+#+',
+    '                                    ',
+    '+OO# OOOOOOOOOOO O OOOOOOOOOOOOOO+#+',
+    '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###',
+    '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###'
+  ];
+
+  var planeLayoutIn = seven6seven;
 
   this.planeLayout = this.initPlaneLayout(planeLayoutIn);
   this.initRandomTravelersAtSpecificSeats(
