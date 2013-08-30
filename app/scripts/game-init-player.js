@@ -6,7 +6,7 @@ MileHigh.prototype.initPlayer = function (planeLayout) {
   return {
     x:2,
     y:3,
-    width:25,
-    height:25
+    width:23,
+    height:23
   };
 };
