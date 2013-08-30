@@ -2,7 +2,7 @@
 /*jshint unused: false */
 'use strict';
 
-MileHigh.prototype.renderPlane = function (ctx, planeLayout, boardWidth, boardHeight) {
+MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
 
   var PIECE_SIZE = 25;    // 20 pixels high and wide
 
@@ -38,9 +38,11 @@ MileHigh.prototype.renderPlane = function (ctx, planeLayout, boardWidth, boardHe
 
   ctx.clearRect(0, 0, boardWidth, boardHeight);
 
-  for (var row = 0; row < planeLayout.length; row++) {
-    for (var col = 0; col < planeLayout[0].length; col++) {
-      switch (planeLayout[row][col]) {
+  var layoutArray = this.planeLayout.asArray();
+
+  for (var row = 0; row < layoutArray.length; row++) {
+    for (var col = 0; col < layoutArray[0].length; col++) {
+      switch (layoutArray[row][col]) {
       case 'O':
         renderSeat(row, col);
         break;

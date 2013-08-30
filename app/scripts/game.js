@@ -4,6 +4,8 @@
 
 var MileHigh = function () {
 
+  var TOTAL_TRAVELERS = 20;
+
 	var planeLayoutIn =
       [ '####O O O O O O O O O O O O O O O O O ',
         '####O O O O O O O O O O O O O O O O O ',
@@ -16,7 +18,10 @@ var MileHigh = function () {
         '####O O O O O O O O O O O O O O O O O ' ];
 
   this.planeLayout = this.initPlaneLayout(planeLayoutIn);
-  this.travelers = this.initRandomTravelersAtSpecificSeats(this.planeLayout);
+  this.initRandomTravelersAtSpecificSeats(
+    { planeLayout: this.planeLayout,
+      totalTravelers: TOTAL_TRAVELERS }
+  );
   this.player = this.initPlayer(this.planeLayout);
   this.controls = this.initControls(this.player);
 };
