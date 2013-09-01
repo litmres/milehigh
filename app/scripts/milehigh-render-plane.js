@@ -38,7 +38,7 @@ MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
 
   ctx.clearRect(0, 0, boardWidth, boardHeight);
 
-  var layoutArray = this.world.planeLayout.asArray();
+  var layoutArray = this.world.planeLayout.arrayForRender();
 
   for (var row = 0; row < layoutArray.length; row++) {
     for (var col = 0; col < layoutArray[0].length; col++) {

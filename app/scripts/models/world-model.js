@@ -5,10 +5,7 @@
 'use strict';
 
 function World(planeLayoutIn, totalTravelers, player) {
-  var layout = new PlaneLayout();
-  layout.initLayout(planeLayoutIn);
-  this.planeLayout = layout;
-
+  this.planeLayout = new PlaneLayout(planeLayoutIn);
   this.initRandomTravelersAtSpecificSeats(totalTravelers);
   this.player = player;
 }

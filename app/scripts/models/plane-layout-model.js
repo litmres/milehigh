@@ -3,16 +3,8 @@
   */
 'use strict';
 
-function PlaneLayout() {
-  this.planeLayout = null;
-}
-
-PlaneLayout.prototype.asArray = function () {
-  return this.planeLayout;
-};
-
-PlaneLayout.prototype.initLayout = function (planeLayoutIn) {
-	var planeLayout = [],
+function PlaneLayout(planeLayoutIn) {
+  var planeLayout = [],
     firstRowLength = 0;
 
   for (var i=0; i < planeLayoutIn.length; i++) {
@@ -24,6 +16,10 @@ PlaneLayout.prototype.initLayout = function (planeLayoutIn) {
   }
 
   this.planeLayout = planeLayout;
+}
+
+PlaneLayout.prototype.arrayForRender = function () {
+  return this.planeLayout;
 };
 
 /* Find any seat, whether occupied or not */
