@@ -3,15 +3,24 @@
 'use strict';
 
 MileHigh.prototype.initControls = function (player) {
+  var world = this.world;
   addEventListener('keydown', function(e) {
     if (e.keyCode === 37) {
-      player.x--;
+      if (world.canIMoveLeft()) {
+        player.x--;
+      }
     } else if (e.keyCode === 38) {
-      player.y--;
+      if (world.canIMoveUp()) {
+        player.y--;
+      }
     } else if (e.keyCode === 39) {
-      player.x++;
+      if (world.canIMoveRight()) {
+        player.x++;
+      }
     } else if (e.keyCode === 40) {
-      player.y++;
+      if (world.canIMoveDown()) {
+        player.y++;
+      }
     }
   }, false);
 };

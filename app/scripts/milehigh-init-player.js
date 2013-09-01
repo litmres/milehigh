@@ -2,7 +2,7 @@
 /*jshint unused: false */
 'use strict';
 
-MileHigh.prototype.initPlayer = function (planeLayout) {
+MileHigh.prototype.initPlayer = function () {
   return {
     x:2,
     y:3,

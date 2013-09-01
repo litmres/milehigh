@@ -37,7 +37,7 @@ var MileHigh = function () {
     '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###'
   ];
 
+  this.player = this.initPlayer();
   this.world = new World(seven6seven, TOTAL_TRAVELERS, this.player);
-  this.player = this.initPlayer(this.world.planeLayout);
   this.controls = this.initControls(this.player);
 };
