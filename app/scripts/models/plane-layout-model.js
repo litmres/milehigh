@@ -35,7 +35,7 @@ PlaneLayout.prototype.findRandomSeat = function () {
     row = Math.floor((Math.random()*totalRows));
     col = Math.floor((Math.random()*totalCols));
     if (this.planeLayout[row][col] === 'O') {
-      return { row: row, col: col };
+      return { x: col, y: row };
     }
   }
 };
@@ -43,14 +43,30 @@ PlaneLayout.prototype.findRandomSeat = function () {
 /*
   Return true if seat is in arrayOfExistingSeats.
 
-  A seat is in this format: { row: 1, col: 2 }
+  A seat is in this format: {x: 1, y: 2}
   */
 PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
 
   for (var t=0; t < arrayOfExistingSeats.length; t++) {
-    if ((seat.row === arrayOfExistingSeats[t].row) && (seat.col === arrayOfExistingSeats[t].col)) {
+    if ((seat.y === arrayOfExistingSeats[t].y) && (seat.x === arrayOfExistingSeats[t].x)) {
       return true;
     }
+  }
+};
+
+PlaneLayout.prototype.isLocationUnMoveable = function (locationToCheck) {
+  var x = locationToCheck.x,
+    y = locationToCheck.y;
+
+  switch (this.planeLayout[y][x]) {
+  case 'O':
+    return false;
+  case ' ':
+    return false;
+  case '+':
+    return false;
+  default:
+    return true;
   }
 };
 

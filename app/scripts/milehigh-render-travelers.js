@@ -27,6 +27,6 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
   var travelers = this.world.travelers;
 
   for (var t = 0; t < travelers.length; t++) {
-    renderTraveler(travelers[t].row, travelers[t].col);
+    renderTraveler(travelers[t].y, travelers[t].x);
   }
 };
