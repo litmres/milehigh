@@ -26,6 +26,7 @@ PlaneLayout.prototype.initLayout = function (planeLayoutIn) {
   this.planeLayout = planeLayout;
 };
 
+/* Find any seat, whether occupied or not */
 PlaneLayout.prototype.findRandomSeat = function () {
   var row,
     col,
@@ -42,6 +43,8 @@ PlaneLayout.prototype.findRandomSeat = function () {
 };
 
 /*
+  Return true if seat is in arrayOfExistingSeats.
+
   A seat is in this format: { row: 1, col: 2 }
   */
 PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
@@ -51,4 +54,31 @@ PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
       return true;
     }
   }
+};
+
+/*
+  TODO:
+    If at edge of board, return false, otherwise is the space next to me somewhere I can move
+    and is the space available to be moved into?
+
+  location is { row: 1, col: 2 }
+*/
+PlaneLayout.prototype.canIMoveLeft = function (location) {
+  console.log(location);
+  return true;
+};
+
+PlaneLayout.prototype.canIMoveRight = function (location) {
+  console.log(location);
+  return true;
+};
+
+PlaneLayout.prototype.canIMoveUp = function (location) {
+  console.log(location);
+  return true;
+};
+
+PlaneLayout.prototype.canIMoveDown = function (location) {
+  console.log(location);
+  return true;
 };
