@@ -54,20 +54,27 @@ PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
   }
 };
 
+PlaneLayout.prototype.isLocationASeat = function (location) {
+  if (this.planeLayout[location.y][location.x] === 'O') {
+    return true;
+  }
+  return false;
+};
+
 PlaneLayout.prototype.isLocationUnMoveable = function (currentLocation, newLocation) {
   var x = newLocation.x,
     y = newLocation.y;
 
   switch (this.planeLayout[y][x]) {
   case 'O':
-    if (currentLocation.x === x) {
-      // not moving horizontally since you can't enter a seat from left or right, only top or bottom
-      return false;
-    }
-    return true;
   case ' ':
-    return false;
   case '+':
+    // ensure you can't move horizontally into or out of seats
+    if (currentLocation.y === y) {    // only check if you're trying to move horizontally
+      if (this.isLocationASeat(currentLocation) || this.isLocationASeat(newLocation)) {
+        return true;
+      }
+    }
     return false;
   default:
     return true;
