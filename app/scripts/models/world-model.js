@@ -31,12 +31,12 @@ World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
   If at edge of board, return false, otherwise is the space next to me somewhere I can move
   and is the space available to be moved into?
 */
-World.prototype.spaceNotAvailableToMoveTo = function (locationToCheck) {
+World.prototype.spaceNotAvailableToMoveTo = function (currentLocation, locationToCheck) {
   var x = locationToCheck.x,
     y = locationToCheck.y;
 
   // make sure map square is valid to move to (prior to checking if anyone else is actually there)
-  if (this.planeLayout.isLocationUnMoveable({x: x, y: y})) {
+  if (this.planeLayout.isLocationUnMoveable(currentLocation, {x: x, y: y})) {
     return true;
   }
 
@@ -55,7 +55,7 @@ World.prototype.canIMoveLeft = function () {
   if (this.planeLayout.atLeftEdge(currentLocation)) {
     return false;
   }
-  if (this.spaceNotAvailableToMoveTo({x: currentLocation.x - 1, y: currentLocation.y})) {
+  if (this.spaceNotAvailableToMoveTo(currentLocation, {x: currentLocation.x - 1, y: currentLocation.y})) {
     return false;
   }
   return true;
@@ -66,7 +66,7 @@ World.prototype.canIMoveRight = function () {
   if (this.planeLayout.atRightEdge(currentLocation)) {
     return false;
   }
-  if (this.spaceNotAvailableToMoveTo({x: currentLocation.x + 1, y: currentLocation.y})) {
+  if (this.spaceNotAvailableToMoveTo(currentLocation, {x: currentLocation.x + 1, y: currentLocation.y})) {
     return false;
   }
   return true;
@@ -77,7 +77,7 @@ World.prototype.canIMoveUp = function () {
   if (this.planeLayout.atTopEdge(currentLocation)) {
     return false;
   }
-  if (this.spaceNotAvailableToMoveTo({x: currentLocation.x, y: currentLocation.y - 1})) {
+  if (this.spaceNotAvailableToMoveTo(currentLocation, {x: currentLocation.x, y: currentLocation.y - 1})) {
     return false;
   }
   return true;
@@ -88,7 +88,7 @@ World.prototype.canIMoveDown = function () {
   if (this.planeLayout.atBottomEdge(currentLocation)) {
     return false;
   }
-  if (this.spaceNotAvailableToMoveTo({x: currentLocation.x, y: currentLocation.y + 1})) {
+  if (this.spaceNotAvailableToMoveTo(currentLocation, {x: currentLocation.x, y: currentLocation.y + 1})) {
     return false;
   }
   return true;

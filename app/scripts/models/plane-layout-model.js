@@ -26,16 +26,16 @@ PlaneLayout.prototype.arrayForRender = function () {
 
 /* Find any seat, whether occupied or not */
 PlaneLayout.prototype.findRandomSeat = function () {
-  var row,
-    col,
-    totalRows = this.planeLayout.length,
-    totalCols = this.planeLayout[0].length;
+  var y,
+    x,
+    totalRows = this.height,
+    totalCols = this.width;
 
   while (true) {
-    row = Math.floor((Math.random()*totalRows));
-    col = Math.floor((Math.random()*totalCols));
-    if (this.planeLayout[row][col] === 'O') {
-      return { x: col, y: row };
+    y = Math.floor((Math.random() * totalRows));
+    x = Math.floor((Math.random() * totalCols));
+    if (this.planeLayout[y][x] === 'O') {
+      return { x: x, y: y };
     }
   }
 };
@@ -54,13 +54,17 @@ PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
   }
 };
 
-PlaneLayout.prototype.isLocationUnMoveable = function (locationToCheck) {
-  var x = locationToCheck.x,
-    y = locationToCheck.y;
+PlaneLayout.prototype.isLocationUnMoveable = function (currentLocation, newLocation) {
+  var x = newLocation.x,
+    y = newLocation.y;
 
   switch (this.planeLayout[y][x]) {
   case 'O':
-    return false;
+    if (currentLocation.x === x) {
+      // not moving horizontally since you can't enter a seat from left or right, only top or bottom
+      return false;
+    }
+    return true;
   case ' ':
     return false;
   case '+':
