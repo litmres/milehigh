@@ -18,12 +18,12 @@
     document.body.appendChild(board);
   })();
 
-  var game = new MileHigh();
+  var milehigh = new MileHigh();
 
   function tick() {
-    game.renderPlane(ctx, game.planeLayout, board.width, board.height);
-    game.renderTravelers(ctx, game.travelers, board.width, board.height);
-    game.renderPlayer(ctx, game.planeLayout);
+    milehigh.renderPlane(ctx, milehigh.planeLayout, board.width, board.height);
+    milehigh.renderTravelers(ctx, milehigh.travelers, board.width, board.height);
+    milehigh.renderPlayer(ctx, milehigh.planeLayout);
   }
 
   function loop() {
