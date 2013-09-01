@@ -24,7 +24,7 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
     renderSimpleSquare(row, col, '#008');
   }
 
-  var travelers = this.travelers;
+  var travelers = this.world.travelers;
 
   for (var t = 0; t < travelers.length; t++) {
     renderTraveler(travelers[t].row, travelers[t].col);

@@ -1,7 +1,7 @@
-'use strict';
 /*
   PlaneLayout model
   */
+'use strict';
 
 function PlaneLayout() {
   this.planeLayout = null;

@@ -21,9 +21,9 @@
   var milehigh = new MileHigh();
 
   function tick() {
-    milehigh.renderPlane(ctx, milehigh.planeLayout, board.width, board.height);
-    milehigh.renderTravelers(ctx, milehigh.travelers, board.width, board.height);
-    milehigh.renderPlayer(ctx, milehigh.planeLayout);
+    milehigh.renderPlane(ctx, milehigh.world.planeLayout, board.width, board.height);
+    milehigh.renderTravelers(ctx, milehigh.world.travelers, board.width, board.height);
+    milehigh.renderPlayer(ctx);
   }
 
   function loop() {

@@ -1,4 +1,5 @@
 /*jshint unused: false */
+/*globals World */
 
 'use strict';
 
@@ -36,13 +37,7 @@ var MileHigh = function () {
     '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###'
   ];
 
-  var planeLayoutIn = seven6seven;
-
-  this.planeLayout = this.initPlaneLayout(planeLayoutIn);
-  this.initRandomTravelersAtSpecificSeats(
-    { planeLayout: this.planeLayout,
-      totalTravelers: TOTAL_TRAVELERS }
-  );
-  this.player = this.initPlayer(this.planeLayout);
+  this.world = new World(seven6seven, TOTAL_TRAVELERS, this.player);
+  this.player = this.initPlayer(this.world.planeLayout);
   this.controls = this.initControls(this.player);
 };
