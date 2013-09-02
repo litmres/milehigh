@@ -1,7 +1,7 @@
 /*globals describe, it, expect, PlaneLayout */
 'use strict';
 (function () {
-  describe('PlaneLayoutModel', function () {
+  describe('PlaneLayout model', function () {
     it('should initalize', function () {
       var simpleLayout = [
         '#OOOO#',
