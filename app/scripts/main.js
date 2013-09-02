@@ -24,6 +24,7 @@
     milehigh.renderPlane(ctx, milehigh.world.planeLayout, board.width, board.height);
     milehigh.renderTravelers(ctx, milehigh.world.travelers, board.width, board.height);
     milehigh.renderPlayer(ctx);
+    milehigh.nextTurn(new Date());
   }
 
   function loop() {
