@@ -20,16 +20,16 @@
 
   var milehigh = new MileHigh();
 
-  function tick() {
+  function tick(timestamp) {
     milehigh.renderPlane(ctx, milehigh.world.planeLayout, board.width, board.height);
     milehigh.renderTravelers(ctx, milehigh.world.travelers, board.width, board.height);
     milehigh.renderPlayer(ctx);
-    milehigh.nextTurn(new Date());
+    milehigh.nextTurn(timestamp);
   }
 
-  function loop() {
+  function loop(timestamp) {
     requestAnimationFrame(loop);
-    tick();
+    tick(timestamp);
   }
 
   function start() {
