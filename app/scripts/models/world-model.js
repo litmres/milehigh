@@ -8,7 +8,19 @@ function World(planeLayoutIn, totalTravelers, player) {
   this.planeLayout = new PlaneLayout(planeLayoutIn);
   this.initRandomTravelersAtSpecificSeats(totalTravelers);
   this.player = player;
+  this.player.state = World.PlayerState.HORNY; // a player's natural state
 }
+
+/**
+ * All possible states for a player.  We'll keep a flag to one of these
+ * values on the player object
+ */
+World.PlayerState = {
+  'HORNY': 1,
+  'FLIRTING': 2,
+  'PAIRED': 3,
+  'IN_BATHROOM': 4
+};
 
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
 
@@ -92,4 +104,37 @@ World.prototype.canIMoveDown = function () {
     return false;
   }
   return true;
+};
+
+/**
+ * Checks if player is near a traveler for flirting.  Returns array of matches
+ * @param {Object} opts
+ *   {Boolean} breakOnMatch return after 1st match
+ * @return {Array}
+ */
+World.prototype.getNearbyTravelers = function (opts) {
+  var near = [],
+      currentLocation = {x: this.player.x, y: this.player.y},
+      testLocation = {}, 
+      cx, cy;
+
+  opts = opts || {};
+
+  // Check all adjoining squares
+  // OPTIMIZATION: Perhaps walking travelers array would be faster?
+  for (var x = -1; x <= 1; x++) {
+    testLocation.x = currentLocation.x + x;
+
+    for (var y = -1; y <= 1; y++) {
+      testLocation.y = currentLocation.y + y;
+
+      if (this.planeLayout.isLocationASeat(testLocation) && this.planeLayout.isSeatTaken(testLocation, this.travelers)) {
+        near.push({x: testLocation.x, y: testLocation.y});
+        if (opts.breakOnMatch) {
+          break;
+        }
+      }
+    }
+  }
+  return near;
 };

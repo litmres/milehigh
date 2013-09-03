@@ -7,6 +7,7 @@ MileHigh.prototype.initPlayer = function () {
     x:2,
     y:3,
     width:23,
-    height:23
+    height:23,
+    state:null
   };
 };
