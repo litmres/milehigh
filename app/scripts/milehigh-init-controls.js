@@ -24,3 +24,4 @@ MileHigh.prototype.initControls = function (player) {
     }
   }, false);
 };
+

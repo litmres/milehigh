@@ -1,5 +1,5 @@
 /*jshint unused: false */
-/*globals World */
+/*globals World,GameStats */
 
 'use strict';
 
@@ -40,4 +40,5 @@ var MileHigh = function () {
   this.player = this.initPlayer();
   this.world = new World(seven6seven, TOTAL_TRAVELERS, this.player);
   this.controls = this.initControls(this.player);
+  this.gameStats = new GameStats();
 };
