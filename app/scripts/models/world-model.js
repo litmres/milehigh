@@ -22,6 +22,8 @@ World.PlayerState = {
   'IN_BATHROOM': 4
 };
 
+World.PAIRING_HEAT_THRESHOLD = 10;
+
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
 
   var seatTaken,
@@ -184,4 +186,23 @@ World.prototype.updateTravelerHeatLevels = function (flirting) {
       this.travelers[i].heat = 0;
     }
   }
+};
+
+/**
+ * Return array of travelers ready to pair (since there may be more than one)
+ */
+World.prototype.travelersReadyToPair = function (flirting) {
+  var pairsFound = [];
+
+  for (var i = 0, len = this.travelers.length; i < len; i++) {
+    // lookup matching traveler by id
+    for (var j = 0; j < flirting.length; j++) {
+      if (flirting[j].id === this.travelers[i].id) {
+        if (this.travelers[i].heat >= World.PAIRING_HEAT_THRESHOLD) {
+          pairsFound.push(this.travelers[i].id);
+        }
+      }
+    }
+  }
+  return pairsFound;
 };

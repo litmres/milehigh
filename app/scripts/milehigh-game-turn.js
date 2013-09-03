@@ -28,15 +28,16 @@ MileHigh.prototype.playTurn = function () {
   switch (this.player.state) {
   case World.PlayerState.HORNY:
     // Check for proximity to travelers.  If near one, transition to flirting
-    this.checkForPairing();
+    this.checkForFlirting();
     break;
   case World.PlayerState.FLIRTING:
     // When near any traveler and not currently paired, increase traveler heat
     // level
-    this.updatePairing();
+    this.checkForPairing();
     break;
   case World.PlayerState.PAIRED:
-    console.log('player is paired!');
+    // At the moment, there is no unpairing until they reach bathroom,
+    // so not much to do in this state.
     break;
   case World.PlayerState.IN_BATHROOM:
     console.log('player is in a bathroom!');
@@ -50,24 +51,43 @@ MileHigh.prototype.playTurn = function () {
  * Check for proximity to traveler.  Simply transition to flirting mode if we
  * are near any - must be in nearby seat or isle?.
  */
-MileHigh.prototype.checkForPairing = function () {
+MileHigh.prototype.checkForFlirting = function () {
   var near = this.world.getNearbyTravelers({breakOnMatch: true});
 
-  if (near.length > 0) { // transition to horny if near traveler
+  if (near.length === 0) {  // revert to horny state if moved away
+    this.player.state = World.PlayerState.HORNY;
+    console.log('player is horny');
+    return;
+  }
+
+  if (near.length > 0) { // transition to flirting if near traveler
     this.player.state = World.PlayerState.FLIRTING;
     console.log('player is flirting');
   }
 };
 
 /**
- * Update pairing levels on nearby travelers.
+ * Check heat levels on nearby travelers and see if we should become paired.
  */
-MileHigh.prototype.updatePairing = function () {
+MileHigh.prototype.checkForPairing = function () {
   var near = this.world.getNearbyTravelers();
 
   if (near.length === 0) {  // revert to horny state if moved away
     this.player.state = World.PlayerState.HORNY;
     console.log('player is horny');
   }
+  // increment heat levels for nearby, and remove from those not or no longer nearby
   this.world.updateTravelerHeatLevels(near);
+
+  this.pairedTravelers = this.world.travelersReadyToPair(near);
+  if (this.world.travelersReadyToPair(near).length > 0) {
+    this.player.state = World.PlayerState.PAIRED;
+    console.log('player is paired with these traveler(s): ', near);
+
+    //TODO: Once paired, the array of pairings needs to be saved so they can be
+    //    dragged behind the player as they move to the lavatory.
+    //  Should these nearby travelers be returned and tracked here in MileHigh,
+    //    or should they be saved in the world model and be manipulated there via helpers?
+    //  If the later, the existing world-helpers can be refactored to no longer pass "near" around.
+  }
 };
