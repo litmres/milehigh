@@ -1,4 +1,4 @@
-/*globals MileHigh */
+/*globals MileHigh,World */
 /*jshint unused: false */
 'use strict';
 
@@ -26,24 +26,22 @@ MileHigh.prototype.playTurn = function () {
   // state machine, we need to use a basic switch statement to determine 
   // which rules to apply.
   switch (this.player.state) {
-    case World.PlayerState.HORNY:
-      // Check for proximity to travelers.  If near one, transition to flirting
-      console.log('player is horny');
-      this.checkForPairing();
-      break;
-    case World.PlayerState.FLIRTING:
-      // When near any traveler and not currently paired, increase traveler heat
-      // level
-      this.checkForPairing();
-      console.log('player is flirting');
-      break;
-    case World.PlayerState.PAIRED:
-      console.log('player is paired!');
-      break;
-    case World.PlayerState.IN_BATHROOM:
-      console.log('player is in a bathroom!');
-      break;
-  };
+  case World.PlayerState.HORNY:
+    // Check for proximity to travelers.  If near one, transition to flirting
+    this.checkForPairing();
+    break;
+  case World.PlayerState.FLIRTING:
+    // When near any traveler and not currently paired, increase traveler heat
+    // level
+    this.updatePairing();
+    break;
+  case World.PlayerState.PAIRED:
+    console.log('player is paired!');
+    break;
+  case World.PlayerState.IN_BATHROOM:
+    console.log('player is in a bathroom!');
+    break;
+  }
 
   this.gameStats.turns++;
 };
@@ -53,12 +51,23 @@ MileHigh.prototype.playTurn = function () {
  * are near any - must be in nearby seat or isle?.
  */
 MileHigh.prototype.checkForPairing = function () {
-    var near = this.world.getNearbyTravelers({breakOnMatch: true});
-    
-    // maintain proper state
-    if (near.length > 0) { 
-      this.player.state = World.PlayerState.FLIRTING;
-    } else {
-      this.player.state = World.PlayerState.HORNY;
-    }
+  var near = this.world.getNearbyTravelers({breakOnMatch: true});
+
+  if (near.length > 0) { // transition to horny if near traveler
+    this.player.state = World.PlayerState.FLIRTING;
+    console.log('player is flirting');
+  }
+};
+
+/**
+ * Update pairing levels on nearby travelers.
+ */
+MileHigh.prototype.updatePairing = function () {
+  var near = this.world.getNearbyTravelers();
+
+  if (near.length === 0) {  // revert to horny state if moved away
+    this.player.state = World.PlayerState.HORNY;
+    console.log('player is horny');
+  }
+  this.world.updateTravelerHeatLevels(near);
 };

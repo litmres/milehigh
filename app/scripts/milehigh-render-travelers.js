@@ -20,13 +20,21 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
     ctx.fillRect(x, y, width, height);
   }
 
-  function renderTraveler (row, col) {
+  function renderTraveler (row, col, heat) {
     renderSimpleSquare(row, col, '#008');
+    
+    // Show heat level if paired
+    if (heat > 0) {
+      ctx.font = '10pt Arial';
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.fillText(heat + '', col * PIECE_SIZE + PIECE_SIZE / 2 + 1, row * PIECE_SIZE + PIECE_SIZE / 2 + 6);
+    }
   }
 
   var travelers = this.world.travelers;
 
   for (var t = 0; t < travelers.length; t++) {
-    renderTraveler(travelers[t].y, travelers[t].x);
+    renderTraveler(travelers[t].y, travelers[t].x, travelers[t].heat);
   }
 };

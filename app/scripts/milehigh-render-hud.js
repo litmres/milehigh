@@ -12,11 +12,11 @@ MileHigh.prototype.renderHUD = function (ctx, stats, boardWidth, boardHeight) {
   ctx.fillStyle = '#020';
   ctx.fillRect(0, y - 20, boardWidth, boardHeight);
   ctx.font = '15pt Arial';
-  this.renderText(ctx, "Turn " + stats.turns, 5, y + 1);
+  this.renderText(ctx, 'Turn ' + stats.turns, 5, y + 1);
 };
 
 MileHigh.prototype.renderText = function (ctx, text, x, y) {
   ctx.textAlign = 'left';
   ctx.fillStyle = 'white';
-  ctx.fillText(text, x, y); 
+  ctx.fillText(text, x, y);
 };

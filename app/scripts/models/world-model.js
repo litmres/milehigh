@@ -1,4 +1,4 @@
-/*globals PlaneLayout */
+/*globals PlaneLayout,Traveler */
 /*
   Model layer that answers questions about the plane layout, travelers and main player.
 */
@@ -25,17 +25,21 @@ World.PlayerState = {
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
 
   var seatTaken,
-    seatToTry;
+    seatToTry,
+    traveler;
 
   this.travelers = [];
 
-  for (var traveler=0; traveler < totalTravelers; traveler++) {
+  for (var i=0; i < totalTravelers; i++) {
     seatTaken = true;
     while (seatTaken) {
       seatToTry = this.planeLayout.findRandomSeat();
       seatTaken = this.planeLayout.isSeatTaken(seatToTry, this.travelers);
     }
-    this.travelers.push(seatToTry);
+    traveler = new Traveler('T' + i, seatToTry);
+    // TODO: We should initialize a Traveler object or decorate the blob with random
+    // traveler properties here
+    this.travelers.push(traveler);
   }
 };
 
@@ -107,6 +111,23 @@ World.prototype.canIMoveDown = function () {
 };
 
 /**
+ * Returns traveler at some location
+ * @param {Object} location with x, y
+ * @return {Traveler} or null 
+ */
+World.prototype.getTravelerAtLocation = function (location) {
+  var traveler = null;
+
+  for (var i = 0, len = this.travelers.length; i < len; i++) {
+    if (this.travelers[i].x === location.x && this.travelers[i].y === location.y) {
+      traveler = this.travelers[i];
+      break;
+    }
+  }
+  return traveler;
+};
+
+/**
  * Checks if player is near a traveler for flirting.  Returns array of matches
  * @param {Object} opts
  *   {Boolean} breakOnMatch return after 1st match
@@ -115,8 +136,7 @@ World.prototype.canIMoveDown = function () {
 World.prototype.getNearbyTravelers = function (opts) {
   var near = [],
       currentLocation = {x: this.player.x, y: this.player.y},
-      testLocation = {}, 
-      cx, cy;
+      testLocation = {};
 
   opts = opts || {};
 
@@ -129,7 +149,9 @@ World.prototype.getNearbyTravelers = function (opts) {
       testLocation.y = currentLocation.y + y;
 
       if (this.planeLayout.isLocationASeat(testLocation) && this.planeLayout.isSeatTaken(testLocation, this.travelers)) {
-        near.push({x: testLocation.x, y: testLocation.y});
+
+        near.push(this.getTravelerAtLocation(testLocation));
+
         if (opts.breakOnMatch) {
           break;
         }
@@ -137,4 +159,29 @@ World.prototype.getNearbyTravelers = function (opts) {
     }
   }
   return near;
+};
+
+/**
+ * Updates all traveler 'heat' levels
+ * @param {Array} flirting List of currently flirting travelers
+ */
+World.prototype.updateTravelerHeatLevels = function (flirting) {
+  var found;
+
+  for (var i = 0, len = this.travelers.length; i < len; i++) {
+    found = false;
+
+    // lookup matching traveler by id
+    for (var j = 0; j < flirting.length; j++) {
+      if (flirting[j].id === this.travelers[i].id) {
+        found = true;
+        break;
+      }
+    }
+    if (found) {
+      this.travelers[i].heat += 1;
+    } else {
+      this.travelers[i].heat = 0;
+    }
+  }
 };
