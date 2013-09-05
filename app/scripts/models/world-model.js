@@ -213,6 +213,10 @@ World.prototype.travelersReadyToPair = function (flirting) {
   return pairsFound;
 };
 
+/**
+ * Return all the travelers marked as "paired".
+ *
+ */
 World.prototype.pairedTravelers = function () {
     return this.travelers.filter(function (traveler) {
       return traveler.paired;
