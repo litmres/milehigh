@@ -39,6 +39,9 @@ var MileHigh = function () {
 
   this.player = this.initPlayer();
   this.world = new World(seven6seven, TOTAL_TRAVELERS, this.player);
+  if (window.AudioContext) {
+    this.audio = this.initAudio();
+  }
   this.controls = this.initControls(this.player);
   this.gameStats = new GameStats();
 };
