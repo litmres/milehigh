@@ -60,7 +60,7 @@ World.prototype.spaceNotAvailableToMoveTo = function (currentLocation, locationT
 
   // make sure no travelers are there
   for (var traveler = 0; traveler < this.travelers.length; traveler++) {
-    if ((x === this.travelers[traveler].x) && (y === this.travelers[traveler].y)) {
+    if ((x === this.travelers[traveler].x) && (y === this.travelers[traveler].y) && (!this.travelers[traveler].paired)) {
       return true;
     }
   }
@@ -199,10 +199,16 @@ World.prototype.travelersReadyToPair = function (flirting) {
     for (var j = 0; j < flirting.length; j++) {
       if (flirting[j].id === this.travelers[i].id) {
         if (this.travelers[i].heat >= World.PAIRING_HEAT_THRESHOLD) {
-          pairsFound.push(this.travelers[i].id);
+          pairsFound.push(this.travelers[i]);
         }
       }
     }
   }
   return pairsFound;
 };
+
+World.prototype.pairedTravelers = function () {
+    return this.travelers.filter(function (traveler) {
+      return traveler.paired;
+    });
+  };

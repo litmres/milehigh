@@ -14,6 +14,17 @@ function Traveler (id, opts) {
   this.baseHeat = Math.floor(Math.random(10));
   this.encounters = 0; // number of times in bathroom
   this.blocks = 0; // number of times bathroom encounters failed
+  this.paired = false;
   // other possible properties: frigidity or looseness, type: (flight
-  // attendant, pilot, ...) 
+  // attendant, pilot, ...)
 }
+
+/*
+ * Do the act of pairing a traveler. Expects newPosition to have an x and y property
+ * to use as the travelers new position.
+ */
+Traveler.prototype.pair = function (newPosition) {
+  this.paired = true;
+  this.x = newPosition.x;
+  this.y = newPosition.y;
+};

@@ -84,10 +84,10 @@ MileHigh.prototype.checkForPairing = function () {
     this.player.state = World.PlayerState.PAIRED;
     console.log('player is paired with these traveler(s): ', near);
 
-    //TODO: Once paired, the array of pairings needs to be saved so they can be
-    //    dragged behind the player as they move to the lavatory.
-    //  Should these nearby travelers be returned and tracked here in MileHigh,
-    //    or should they be saved in the world model and be manipulated there via helpers?
-    //  If the later, the existing world-helpers can be refactored to no longer pass "near" around.
+    // trigger travelers to pair with player
+    var newLocation = this.player;
+    this.pairedTravelers.forEach(function (traveler) {
+      traveler.pair(newLocation);
+    });
   }
 };

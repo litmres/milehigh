@@ -4,7 +4,7 @@
 
 MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
 
-  var PIECE_SIZE = 25;    // 20 pixels high and wide
+  var PIECE_SIZE = 25;    // pixels high and wide
 
   function renderSimpleSquare (row, col, fillStyle) {
     var y = row * PIECE_SIZE,
@@ -22,7 +22,7 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
 
   function renderTraveler (row, col, heat) {
     renderSimpleSquare(row, col, '#008');
-    
+
     // Show heat level if paired
     if (heat > 0) {
       ctx.font = '10pt Arial';
@@ -35,6 +35,8 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
   var travelers = this.world.travelers;
 
   for (var t = 0; t < travelers.length; t++) {
-    renderTraveler(travelers[t].y, travelers[t].x, travelers[t].heat);
+    if (!travelers[t].paired) {
+      renderTraveler(travelers[t].y, travelers[t].x, travelers[t].heat);
+    }
   }
 };
