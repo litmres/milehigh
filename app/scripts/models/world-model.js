@@ -188,6 +188,12 @@ World.prototype.updateTravelerHeatLevels = function (flirting) {
   }
 };
 
+World.prototype.resetTravelerHeatLevels = function () {
+  for (var i = 0, len = this.travelers.length; i < len; i++) {
+    this.travelers[i].heat = 0;
+  }
+};
+
 /**
  * Return array of travelers ready to pair (since there may be more than one)
  */
