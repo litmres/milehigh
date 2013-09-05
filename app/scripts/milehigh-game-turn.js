@@ -56,6 +56,7 @@ MileHigh.prototype.checkForFlirting = function () {
 
   if (near.length === 0) {  // revert to horny state if moved away
     this.player.state = World.PlayerState.HORNY;
+    this.world.resetTravelerHeatLevels();
     console.log('player is horny');
     return;
   }
