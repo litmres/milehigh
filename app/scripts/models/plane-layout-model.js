@@ -61,6 +61,13 @@ PlaneLayout.prototype.isLocationASeat = function (location) {
   return false;
 };
 
+PlaneLayout.prototype.isLocationALavatory = function (location) {
+  if (this.planeLayout[location.y][location.x] === '+') {
+    return true;
+  }
+  return false;
+};
+
 PlaneLayout.prototype.isLocationUnMoveable = function (currentLocation, newLocation) {
   var x = newLocation.x,
     y = newLocation.y;
