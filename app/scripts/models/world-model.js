@@ -19,13 +19,12 @@ World.PlayerState = {
   'HORNY': 1,
   'FLIRTING': 2,
   'PAIRED': 3,
-  'IN_BATHROOM': 4
+  'IN_LAVATORY': 4
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;
 
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
-
   var seatTaken,
     seatToTry,
     traveler;
@@ -213,8 +212,46 @@ World.prototype.travelersReadyToPair = function (flirting) {
   return pairsFound;
 };
 
+/**
+ * Return all the travelers marked as "paired".
+ *
+ */
 World.prototype.pairedTravelers = function () {
     return this.travelers.filter(function (traveler) {
       return traveler.paired;
     });
   };
+
+/**
+ * Return true if player is in the bathroom
+ * @return {boolean}
+ */
+World.prototype.playerInLavatory = function () {
+  if (this.planeLayout.isLocationALavatory(this.player)) {
+    return true;
+  }
+  return false;
+};
+
+World.prototype.findPairedTravelersARandomPlaceToSit = function () {
+  var pairedTravelers = this.pairedTravelers(),
+    seatToTry,
+    seatTaken,
+    planeLayout = this.planeLayout,
+    travelers = this.travelers;
+  pairedTravelers.forEach(function (traveler) {
+    seatTaken = true;
+    while (seatTaken) {
+      seatToTry = planeLayout.findRandomSeat();
+      seatTaken = planeLayout.isSeatTaken(seatToTry, travelers);
+    }
+    traveler.x = seatToTry.x;
+    traveler.y = seatToTry.y;
+  });
+};
+
+World.prototype.clearAllPairings = function () {
+  this.travelers.forEach(function (traveler) {
+    traveler.unpair();
+  });
+};

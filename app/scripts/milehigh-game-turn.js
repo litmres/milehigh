@@ -23,7 +23,7 @@ MileHigh.prototype.playTurn = function () {
   //console.log('running logic for this turn ', this.lastTurnTime);
 
   // There can be many states for the player.  Without implementing a damn
-  // state machine, we need to use a basic switch statement to determine 
+  // state machine, we need to use a basic switch statement to determine
   // which rules to apply.
   switch (this.player.state) {
   case World.PlayerState.HORNY:
@@ -36,11 +36,16 @@ MileHigh.prototype.playTurn = function () {
     this.checkForPairing();
     break;
   case World.PlayerState.PAIRED:
-    // At the moment, there is no unpairing until they reach bathroom,
-    // so not much to do in this state.
+    if (this.world.playerInLavatory()) {
+      this.player.state = World.PlayerState.IN_LAVATORY;
+    }
     break;
-  case World.PlayerState.IN_BATHROOM:
-    console.log('player is in a bathroom!');
+  case World.PlayerState.IN_LAVATORY:
+    console.log('TODO: SCORE!');
+    this.world.findPairedTravelersARandomPlaceToSit();
+    this.world.clearAllPairings();
+    this.player.state = World.PlayerState.HORNY;
+    //TODO: Play a sound too?
     break;
   }
 
@@ -57,13 +62,13 @@ MileHigh.prototype.checkForFlirting = function () {
   if (near.length === 0) {  // revert to horny state if moved away
     this.player.state = World.PlayerState.HORNY;
     this.world.resetTravelerHeatLevels();
-    console.log('player is horny');
+    // console.log('player is horny');
     return;
   }
 
   if (near.length > 0) { // transition to flirting if near traveler
     this.player.state = World.PlayerState.FLIRTING;
-    console.log('player is flirting');
+    // console.log('player is flirting');
   }
 };
 
@@ -75,7 +80,6 @@ MileHigh.prototype.checkForPairing = function () {
 
   if (near.length === 0) {  // revert to horny state if moved away
     this.player.state = World.PlayerState.HORNY;
-    console.log('player is horny');
   }
   // increment heat levels for nearby, and remove from those not or no longer nearby
   this.world.updateTravelerHeatLevels(near);

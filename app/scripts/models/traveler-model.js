@@ -28,3 +28,7 @@ Traveler.prototype.pair = function (newPosition) {
   this.x = newPosition.x;
   this.y = newPosition.y;
 };
+
+Traveler.prototype.unpair = function () {
+  this.paired = false;
+};

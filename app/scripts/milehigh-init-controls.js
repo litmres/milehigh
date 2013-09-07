@@ -5,6 +5,8 @@
 MileHigh.prototype.initControls = function (player) {
   var world = this.world;
   addEventListener('keydown', function(e) {
+    var playerMove = new CustomEvent('audio', {detail: 'playerMove'});
+    window.dispatchEvent(playerMove);
     if (e.keyCode === 37) {
       if (world.canIMoveLeft()) {
         player.x--;
