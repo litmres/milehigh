@@ -2,10 +2,35 @@ body {
   background:#020;
   color:#0d0;
   font-family:courier;
+  text-align: center;
 }
+
+.main {
+  width: 980px;
+  text-align: center;
+}
+
 canvas {
-  width:980px;
-  height:400px;
+  width:975px;
+  height:225px;
   margin:0 auto;
-  border:4px double;
+  border:4px solid #050;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+  color: #080;
+}
+
+.instructions {
+  text-align: center;
+  /*font-size: 2em;*/
+  color: #080;
+}
+
+.debug {
+  margin-top: 10px;
+  text-align: left;
+  color: #080;
 }

@@ -8,6 +8,7 @@
 */
 
 MileHigh.prototype.lastTurnTime = 0;
+MileHigh.prototype.score = 0;
 
 MileHigh.prototype.nextTurn = function (timestamp) {
   var secondsSinceLastTurn = Math.floor((timestamp - this.lastTurnTime) / 1000);
@@ -16,6 +17,15 @@ MileHigh.prototype.nextTurn = function (timestamp) {
     this.lastTurnTime = timestamp || 0;
     this.playTurn();
   }
+};
+
+/**
+ * Update Score and update UI.
+ * @param  {number} incrementScoreBy
+ */
+MileHigh.prototype.updateScore = function (incrementScoreBy) {
+  this.score += incrementScoreBy;
+  document.getElementById('score').textContent = this.score;
 };
 
 MileHigh.prototype.playTurn = function () {
@@ -41,7 +51,7 @@ MileHigh.prototype.playTurn = function () {
     }
     break;
   case World.PlayerState.IN_LAVATORY:
-    console.log('TODO: SCORE!');
+    this.updateScore(this.world.pairedTravelers().length);
     this.world.findPairedTravelersARandomPlaceToSit();
     this.world.clearAllPairings();
     this.player.state = World.PlayerState.HORNY;
@@ -99,7 +109,6 @@ MileHigh.prototype.checkForPairing = function () {
   this.pairedTravelers = this.world.travelersReadyToPair(near);
   if (this.world.travelersReadyToPair(near).length > 0) {
     this.player.state = World.PlayerState.PAIRED;
-    console.log('player is paired with these traveler(s): ', near);
 
     // trigger travelers to pair with player
     var newLocation = this.player;
