@@ -9,6 +9,7 @@ function World(planeLayoutIn, totalTravelers, player) {
   this.initRandomTravelersAtSpecificSeats(totalTravelers);
   this.player = player;
   this.player.state = World.PlayerState.HORNY; // a player's natural state
+  this.currentObstacle = null;
 }
 
 /**
@@ -20,6 +21,16 @@ World.PlayerState = {
   'FLIRTING': 2,
   'PAIRED': 3,
   'IN_LAVATORY': 4
+};
+
+/**
+ * All possible obstacles that can occur during a turn
+ */
+World.Obstacle = {
+    'LANDING': 1,
+    'TURBULENCE': 2,
+    'SNACKS': 3,
+    'TERRIST': 4
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;
@@ -254,4 +265,8 @@ World.prototype.clearAllPairings = function () {
   this.travelers.forEach(function (traveler) {
     traveler.unpair();
   });
+};
+
+World.prototype.inTurbulence = function () {
+    return this.currentObstacle === World.Obstacle.TURBULENCE;
 };

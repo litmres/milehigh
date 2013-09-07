@@ -1,4 +1,4 @@
-/*globals MileHigh */
+/*globals MileHigh,AudioContext */
 /*jshint unused: false */
 'use strict';
 
