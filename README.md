@@ -28,3 +28,8 @@ or
 ## If you want to add/run tests
 
         grunt test
+
+## To build for distribution
+
+		grunt build 		# which builds the "dist" folder
+		zip -r -9 dist.zip dist
