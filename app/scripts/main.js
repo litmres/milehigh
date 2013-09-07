@@ -10,13 +10,12 @@
 })();
 
 (function() {
-  var board = document.createElement('canvas'),
-  ctx = board.getContext('2d');
+  var board = document.getElementById('gameCanvas');
+  var ctx = board.getContext('2d');
 
   (function setup() {
-    board.width = '980';
-    board.height = '400';
-    document.body.appendChild(board);
+    board.width = '975';
+    board.height = '225';
   })();
 
   var milehigh = new MileHigh();

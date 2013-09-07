@@ -1,18 +1,14 @@
 /*globals MileHigh */
+/*jshint unused: false */
 
 'use strict';
 
 // HUD view renderer
-// Called on every turn.  should update all play stats for the user.  
+// Called on every turn.  should update all play stats for the user.
 // We should include a debug mode as well
 MileHigh.prototype.renderHUD = function (ctx, stats, boardWidth, boardHeight) {
-  var HUD_HEIGHT = 100,
-      y = boardHeight - HUD_HEIGHT;
-
-  ctx.fillStyle = '#020';
-  ctx.fillRect(0, y - 20, boardWidth, boardHeight);
-  ctx.font = '15pt Arial';
-  this.renderText(ctx, 'Turn ' + stats.turns, 5, y + 1);
+  var turnCounter = document.getElementById('turnCounter');
+  turnCounter.textContent = stats.turns;
 };
 
 MileHigh.prototype.renderText = function (ctx, text, x, y) {

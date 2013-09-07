@@ -87,7 +87,6 @@ MileHigh.prototype.checkForPairing = function () {
   this.pairedTravelers = this.world.travelersReadyToPair(near);
   if (this.world.travelersReadyToPair(near).length > 0) {
     this.player.state = World.PlayerState.PAIRED;
-    console.log('player is paired with these traveler(s): ', near);
 
     // trigger travelers to pair with player
     var newLocation = this.player;
