@@ -1,11 +1,10 @@
-/*globals MileHigh */
+/*globals MileHigh,World */
 /*jshint unused: false */
 'use strict';
 
 /**
  * Some game settings that could go somewhere one day
  */
-MileHigh.PAIRING_HEAT_THRESHOLD = 10;
 MileHigh.TRAVELER_INITIAL_COLOR_RGB = [0, 143, 255];
 MileHigh.TRAVELER_COLOR_HEX = '#008';
 
@@ -16,9 +15,9 @@ MileHigh.TRAVELER_COLOR_HEX = '#008';
  */
 MileHigh.prototype.getHeatColor = (function () {
   // Determine color gradient step values
-  var rStep = 255 / (MileHigh.PAIRING_HEAT_THRESHOLD),
-    gStep = MileHigh.TRAVELER_INITIAL_COLOR_RGB[1] / (MileHigh.PAIRING_HEAT_THRESHOLD),
-    bStep = MileHigh.TRAVELER_INITIAL_COLOR_RGB[2] / (MileHigh.PAIRING_HEAT_THRESHOLD);
+  var rStep = 255 / (World.PAIRING_HEAT_THRESHOLD),
+    gStep = MileHigh.TRAVELER_INITIAL_COLOR_RGB[1] / (World.PAIRING_HEAT_THRESHOLD),
+    bStep = MileHigh.TRAVELER_INITIAL_COLOR_RGB[2] / (World.PAIRING_HEAT_THRESHOLD);
 
   // helpers grabbed from the web - I don't come up with this shit
   function rgbToHex(R,G,B) {
