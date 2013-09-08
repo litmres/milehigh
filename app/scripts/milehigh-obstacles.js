@@ -12,7 +12,7 @@ MileHigh.prototype.initObstacles = function () {
   this.lastSnackAt = null;
 
   // These can adapt to difficulty and number of players on board
-  this.turbulenceProbability = 0.02;
+  this.turbulenceProbability = 0.2;
   this.snackProbability = 0.1;
 };
 
@@ -67,15 +67,16 @@ MileHigh.prototype.hasTurbulenceWarning = function () {
 MileHigh.prototype.hasTurbulence = function () {
   if (this.world.currentObstacle === World.Obstacle.TURBULENCE_IMMINENT) {
     // for up to 5 seconds
-    if (((new Date()).getTime() - this.turbulenceWarningAt) > 5) {
+    if (((new Date()).getTime() - this.turbulenceWarningAt) > 5000) {
       return true;
     }
+  } else {
+    return this.world.currentObstacle === World.Obstacle.TURBULENCE;
   }
-  return false;
 };
 
 MileHigh.prototype.isTurbulenceOver = function () {
-  return (((new Date()).getTime() - this.lastTurbulenceAt) > 3);
+  return (((new Date()).getTime() - this.lastTurbulenceAt) > 3000);
 };
 
 MileHigh.prototype.hasSnacks = function () {
@@ -97,7 +98,23 @@ MileHigh.prototype.seatBeltsAlert = function () {
   this.turbulenceWarningAt = (new Date()).getTime();
 };
 
+MileHigh.prototype.updateTurbulence = function () {
+  // enable or disable turbulence depending on current state
+  if (this.world.currentObstacle === World.Obstacle.TURBULENCE) {
+    if (this.isTurbulenceOver()) {
+      this.removeTurbulence();
+    }
+  } else {
+    // start turbulence
+    this.addTurbulence();
+  }
+};
+
 MileHigh.prototype.addTurbulence = function () {
+  // guard
+  if (this.world.currentObstacle === World.Obstacle.TURBULENCE) {
+    return;
+  }
   document.getElementById('turbulence-alert').classList.remove('hide');
 
   // Update flag for renderers
