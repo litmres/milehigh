@@ -12,7 +12,7 @@ MileHigh.prototype.initObstacles = function () {
   this.lastSnackAt = null;
 
   // These can adapt to difficulty and number of players on board
-  this.turbulenceProbability = 0.2;
+  this.turbulenceProbability = 0.02;
   this.snackProbability = 0.1;
 };
 
