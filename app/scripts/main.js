@@ -48,6 +48,17 @@
       window.scrollTo(0, 1);
     }, false);
   }
-  start();
+
+  var imgSeat = new Image();
+  imgSeat.src = 'pix/seat.gif';
+
+  var imgFloor = new Image();
+  imgFloor.src = 'pix/floor.gif';
+
+  imgSeat.onload = function() {
+    window.imgSeat = imgSeat;
+    window.imgFloor = imgFloor;
+    start();
+  };
 
 })();
