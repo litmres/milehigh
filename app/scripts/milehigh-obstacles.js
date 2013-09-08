@@ -13,7 +13,7 @@ MileHigh.prototype.initObstacles = function () {
 
   // These can adapt to difficulty and number of players on board
   this.turbulenceProbability = 0.02;
-  this.snackProbability = 0.04;
+  this.snackProbability = 0.1;
 };
 
 /**
@@ -81,7 +81,6 @@ MileHigh.prototype.gameOver = function () {
 };
 
 MileHigh.prototype.addTurbulence = function () {
-  console.log('TURBULENCE!');
   document.getElementById('turbulence-alert').classList.remove('hide');
 
   this.lastTurbulenceAt = (new Date()).getTime();
@@ -89,13 +88,13 @@ MileHigh.prototype.addTurbulence = function () {
   // Update flag for renderers
   this.world.currentObstacle = World.Obstacle.TURBULENCE;
 
-    // Break pairings if not getting busy
-    if (this.player.state !== World.PlayerState.IN_LAVATORY) {
-        this.resetPlayerState();
-    }
-    // Reset player heat levels
-    this.world.resetTravelerHeatLevels();
-    //
+  // Break pairings if not getting busy
+  if (this.player.state !== World.PlayerState.IN_LAVATORY) {
+    this.resetPlayerState();
+  }
+  // Reset player heat levels
+  this.world.resetTravelerHeatLevels();
+  //
   // Play ding
   var seatbelts = new CustomEvent('audio', {detail: 'seatBelts'});
   window.dispatchEvent(seatbelts);
@@ -105,3 +104,16 @@ MileHigh.prototype.removeTurbulence = function () {
   document.getElementById('turbulence-alert').classList.add('hide');
   this.world.currentObstacle = null;
 };
+
+MileHigh.prototype.addSnackCarts = function () {
+  // We don't count attendants in aisle as real obstacle b/c we want turbulence
+  // to be possible even when they are out
+  // We might want to use a bit flag for obstacles if we need to keep track of
+  // each...
+  //this.world.currentObstacle = World.Obstacle.SNACKS;
+
+  this.world.attendants.forEach(function (a) {
+    a.walk();
+  });
+};
+

@@ -46,24 +46,3 @@ var MileHigh = function () {
   this.initObstacles();
 };
 
-/**
- * Rendering hooks for moving the world
- */
-MileHigh.prototype.beginRendering = function (ctx, width, height) {
-    ctx.save();
-
-    if (this.world.currentObstacle === World.Obstacle.TURBULENCE) {
-      var r1 = Math.random(), r2 = Math.random(), off1 = r1 * 10, off2 = r2 * 10;
-      this.jiggleX = (r1 * 10) % 2 === 0 ? -off1 : off1;
-      this.jiggleY = (r2 * 10) % 2 === 0 ? -off2 : off2;
-
-      ctx.translate(this.jiggleX, this.jiggleY);
-    } else {
-      ctx.clearRect(0, 0, width, height);
-    }
-  };
-
-MileHigh.prototype.endRendering = function (ctx) {
-    ctx.translate(-this.jiggleX, -this.jiggleY);
-    ctx.restore();
-  };

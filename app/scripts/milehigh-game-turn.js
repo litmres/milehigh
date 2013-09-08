@@ -66,8 +66,10 @@ MileHigh.prototype.playTurn = function () {
     break;
   case World.Obstacle.SNACKS:
     console.log('snack time!');
+    this.addSnackCarts();
     break;
   }
+  this.world.turn();
 
   this.gameStats.turns++;
 };
@@ -120,7 +122,7 @@ MileHigh.prototype.checkForPairing = function () {
  * Resets player to initial state and clears all pairings
  */
 MileHigh.prototype.resetPlayerState = function () {
-    this.world.findPairedTravelersARandomPlaceToSit();
-    this.world.clearAllPairings();
-    this.player.state = World.PlayerState.HORNY;
+  this.world.findPairedTravelersARandomPlaceToSit();
+  this.world.clearAllPairings();
+  this.player.state = World.PlayerState.HORNY;
 };

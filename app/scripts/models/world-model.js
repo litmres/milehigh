@@ -1,4 +1,4 @@
-/*globals PlaneLayout,Traveler */
+/*globals PlaneLayout,Traveler,Attendant */
 /*
   Model layer that answers questions about the plane layout, travelers and main player.
 */
@@ -6,10 +6,13 @@
 
 function World(planeLayoutIn, totalTravelers, player) {
   this.planeLayout = new PlaneLayout(planeLayoutIn);
-  this.initRandomTravelersAtSpecificSeats(totalTravelers);
   this.player = player;
   this.player.state = World.PlayerState.HORNY; // a player's natural state
   this.currentObstacle = null;
+  this.travelers = [];
+  this.attendants = [];
+  this.initRandomTravelersAtSpecificSeats(totalTravelers);
+  this.initCrew();
 }
 
 /**
@@ -40,8 +43,6 @@ World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
     seatToTry,
     traveler;
 
-  this.travelers = [];
-
   for (var i=0; i < totalTravelers; i++) {
     seatTaken = true;
     while (seatTaken) {
@@ -52,6 +53,17 @@ World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
     // TODO: We should initialize a Traveler object or decorate the blob with random
     // traveler properties here
     this.travelers.push(traveler);
+  }
+};
+
+World.prototype.initCrew = function () {
+  // Add 1 attendant per aisle, on alternating ends of plane
+  for (var i = 0, side = -1; i < this.planeLayout.aisles.length; i++) {
+    this.attendants.push(new Attendant({
+      aisleRow: this.planeLayout.aisles[i],
+      aisleCol: (side === -1) ? 0 : this.planeLayout.width - 1
+    }));
+    side = -side;
   }
 };
 
@@ -71,6 +83,12 @@ World.prototype.spaceNotAvailableToMoveTo = function (currentLocation, locationT
   // make sure no travelers are there
   for (var traveler = 0; traveler < this.travelers.length; traveler++) {
     if ((x === this.travelers[traveler].x) && (y === this.travelers[traveler].y) && (!this.travelers[traveler].paired)) {
+      return true;
+    }
+  }
+  // make sure not attendant or cart are there
+  for (var i = 0; i < this.attendants.length; i++) {
+    if (this.attendants[i].hitTest(locationToCheck)) {
       return true;
     }
   }
@@ -270,3 +288,44 @@ World.prototype.clearAllPairings = function () {
 World.prototype.inTurbulence = function () {
   return this.currentObstacle === World.Obstacle.TURBULENCE;
 };
+
+World.prototype.isAttendantAtEndOfAisle = function (a) {
+  if (a.direction === 'l') {
+    if (a.hasCart) {
+      return a.x <= 2;
+    } else {
+      return this.planeLayout.atLeftEdge(a);
+    }
+  } else {
+    if (a.hasCart) {
+      return a.x >= this.planeLayout.width - 3;
+    } else {
+      return this.planeLayoutatRightEdge(a);
+    }
+  }
+};
+
+World.prototype.canAttendantMoveTo = function (location) {
+  return !(this.getTravelerAtLocation(location) ||
+      (this.player.x === location.x && this.player.y === location.y));
+};
+
+/**
+ * Called each turn - updates non-player objects
+ */
+World.prototype.turn = function () {
+  // Move random travelers
+  // Move attendants
+  this.attendants.forEach(function (a) {
+    if (!a.inSeat) {
+      if (this.isAttendantAtEndOfAisle(a)) {
+        a.sit();
+      } else {
+        if (this.canAttendantMoveTo({x: a.getNextMoveCartLocationX(), y: a.y})) {
+          a.move();
+        }
+      }
+    }
+  }, this);
+};
+
