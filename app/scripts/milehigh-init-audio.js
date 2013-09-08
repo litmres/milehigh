@@ -80,9 +80,9 @@ MileHigh.prototype.initAudio = function () {
   }
 
   function playAudioSeatBelts() {
-    makeAudio('CustomSquare', 587.33, 0.8);
+    makeAudio('CustomSquare', 293.66, 0.6);
     setTimeout(function() {
-      setFreq(493.88);
+      setFreq(246.94);
       setTimeout(stopAudio, 500);
     }, 500);
   }

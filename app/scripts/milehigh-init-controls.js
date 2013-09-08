@@ -31,7 +31,7 @@ MileHigh.prototype.initControls = function (player) {
 
   function touchStart(e) {
     event.preventDefault();
-    if (e.touches.length == 1) {
+    if (e.touches.length === 1) {
       touchEvent.startX = e.touches[0].pageX;
       touchEvent.startY = e.touches[0].pageY;
     }
@@ -65,10 +65,10 @@ MileHigh.prototype.initControls = function (player) {
       move('right');
     } else if (e.keyCode === 40) {
       move('down');
-    } 
-  } 
+    }
+  }
 
-  window.addEventListener('keydown', keyDown, false); 
+  window.addEventListener('keydown', keyDown, false);
   window.addEventListener('touchstart', touchStart, false);
   window.addEventListener('touchmove', touchMove, false);
   window.addEventListener('touchend', touchEnd, false);
