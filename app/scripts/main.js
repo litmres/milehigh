@@ -1,4 +1,4 @@
-/*globals MileHigh, requestAnimationFrame */
+/*globals MileHigh, requestAnimationFrame, World */
 
 'use strict';
 
@@ -31,6 +31,12 @@
   }
 
   function loop(timestamp) {
+    // Is Game Over?
+    if (milehigh.world.currentObstacle === World.Obstacle.LANDING) {
+      document.getElementById('gameover-alert').classList.remove('hide');
+      // TODO: Unregister events upon game over? Or allow restart of game?
+      return;
+    }
     requestAnimationFrame(loop);
     tick(timestamp);
   }

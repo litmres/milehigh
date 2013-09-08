@@ -1,6 +1,8 @@
 /*globals MileHigh,World */
 'use strict';
 
+MileHigh.prototype.maxTurns = 200;
+
 /**
  * Obstacles implementation
  */
@@ -46,6 +48,9 @@ MileHigh.prototype.isLanding = function () {
     return false;
   }
   // return time spent > max time
+  if (this.gameStats.turns >= this.maxTurns) {
+    return true;
+  }
   return false;
 };
 
@@ -69,6 +74,10 @@ MileHigh.prototype.hasSnacks = function () {
     return false;
   }
   return Math.random() < this.snackProbability;
+};
+
+MileHigh.prototype.gameOver = function () {
+  this.world.currentObstacle = World.Obstacle.LANDING;
 };
 
 MileHigh.prototype.addTurbulence = function () {

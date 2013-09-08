@@ -61,7 +61,7 @@ MileHigh.prototype.playTurn = function () {
   // Generate random obstacles and handle any
   switch (this.getObstacle()) {
   case World.Obstacle.LANDING:
-    console.log('plane is landing!');
+    this.gameOver();
     break;
   case World.Obstacle.TURBULENCE:
     this.addTurbulence();

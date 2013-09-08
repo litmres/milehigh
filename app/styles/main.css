@@ -47,13 +47,13 @@ canvas {
   color: #080;
 }
 
-.instructions {
+.instruction-panel {
   text-align: center;
   color: #080;
   padding:1em;;
 }
 
-.debug {
+.score-panel {
   margin-top: 10px;
   text-align: left;
   color: #080;
