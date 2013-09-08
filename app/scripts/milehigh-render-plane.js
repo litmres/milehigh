@@ -11,18 +11,24 @@ MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
       x = col * PIECE_SIZE;
 
     // padding
-    y += 1;
-    x += 1;
+    //y += 1;
+    //x += 1;
 
-    var width = PIECE_SIZE - 2,
-      height = PIECE_SIZE - 2;
+    var width = PIECE_SIZE,
+      height = PIECE_SIZE;
 
     ctx.fillStyle = fillStyle;
     ctx.fillRect(x, y, width, height);
   }
 
+  function renderImageData (row, col, img) {
+    var y = row * PIECE_SIZE;
+    var x = col * PIECE_SIZE;
+    ctx.drawImage(img, x, y);
+  }
+
   function renderSeat (row, col) {
-    renderSimpleSquare(row, col, '#080');
+    renderImageData(row, col, window.imgSeat);
   }
 
   function renderLavatory (row, col) {
@@ -34,7 +40,7 @@ MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
   }
 
   function renderIsle (row, col) {
-    renderSimpleSquare(row, col, '#000');
+    //renderImageData(row, col, window.imgFloor);//this happens in dom
   }
 
   ctx.clearRect(0, 0, boardWidth, boardHeight);
