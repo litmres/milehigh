@@ -58,6 +58,8 @@ MileHigh.prototype.hasSnacks = function () {
 
 MileHigh.prototype.addTurbulence = function () {
     console.log('TURBULENCE!');
+    document.getElementById('turbulence-alert').classList.remove('hide');
+
     this.lastTurbulenceAt = (new Date()).getTime();
 
     // Update flag for renderers
@@ -79,5 +81,6 @@ MileHigh.prototype.addTurbulence = function () {
 };
 
 MileHigh.prototype.removeTurbulence = function () {
+    document.getElementById('turbulence-alert').classList.add('hide');
     this.world.currentObstacle = null;
 };
