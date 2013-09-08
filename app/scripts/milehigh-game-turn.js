@@ -58,6 +58,18 @@ MileHigh.prototype.playTurn = function () {
     //TODO: Play a sound too?
     break;
   }
+  // Generate random obstacles and handle any
+  switch (this.getObstacle()) {
+  case World.Obstacle.LANDING:
+    console.log('plane is landing!');
+    break;
+  case World.Obstacle.TURBULENCE:
+    this.addTurbulence();
+    break;
+  case World.Obstacle.SNACKS:
+    console.log('snack time!');
+    break;
+  }
 
   this.gameStats.turns++;
 };

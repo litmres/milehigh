@@ -13,6 +13,7 @@ MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
     // padding
     y += 1;
     x += 1;
+
     var width = PIECE_SIZE - 2,
       height = PIECE_SIZE - 2;
 
