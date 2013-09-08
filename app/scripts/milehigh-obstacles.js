@@ -69,9 +69,7 @@ MileHigh.prototype.addTurbulence = function () {
 
     // Break pairings if not getting busy
     if (this.player.state !== World.PlayerState.IN_LAVATORY) {
-        this.world.findPairedTravelersARandomPlaceToSit();
-        this.world.clearAllPairings();
-        this.player.state = World.PlayerState.HORNY;
+        this.resetPlayerState();
     }
     // Reset player heat levels
     this.world.resetTravelerHeatLevels();
