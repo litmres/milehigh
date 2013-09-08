@@ -27,10 +27,10 @@ World.PlayerState = {
  * All possible obstacles that can occur during a turn
  */
 World.Obstacle = {
-    'LANDING': 1,
-    'TURBULENCE': 2,
-    'SNACKS': 3,
-    'TERRIST': 4
+  'LANDING': 1,
+  'TURBULENCE': 2,
+  'SNACKS': 3,
+  'TERRIST': 4
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;
@@ -268,5 +268,5 @@ World.prototype.clearAllPairings = function () {
 };
 
 World.prototype.inTurbulence = function () {
-    return this.currentObstacle === World.Obstacle.TURBULENCE;
+  return this.currentObstacle === World.Obstacle.TURBULENCE;
 };
