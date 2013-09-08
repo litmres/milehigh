@@ -7,17 +7,24 @@ function PlaneLayout(planeLayoutIn) {
   var planeLayout = [],
     firstRowLength = 0;
 
+  this.aisles = [];
+
+  // create layout array, count aisles
   for (var i=0; i < planeLayoutIn.length; i++) {
     if (i === 0) { firstRowLength = planeLayoutIn[i].length; }
     if (firstRowLength !== planeLayoutIn[i].length) {
       throw new Error('initPlaneLayout: Rows are not all the same length.');
     }
     planeLayout.push(planeLayoutIn[i].split(''));
-  }
 
+    if (planeLayoutIn[i][0] === ' ') {
+      this.aisles.push(i);
+    }
+  }
   this.planeLayout = planeLayout;
   this.width = firstRowLength;
   this.height = planeLayout.length;
+  this.numAisles = this.aisles.length;
 }
 
 PlaneLayout.prototype.arrayForRender = function () {

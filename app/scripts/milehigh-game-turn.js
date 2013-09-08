@@ -52,9 +52,7 @@ MileHigh.prototype.playTurn = function () {
     break;
   case World.PlayerState.IN_LAVATORY:
     this.updateScore(this.world.pairedTravelers().length);
-    this.world.findPairedTravelersARandomPlaceToSit();
-    this.world.clearAllPairings();
-    this.player.state = World.PlayerState.HORNY;
+    this.resetPlayerState();
     //TODO: Play a sound too?
     break;
   }
@@ -68,8 +66,10 @@ MileHigh.prototype.playTurn = function () {
     break;
   case World.Obstacle.SNACKS:
     console.log('snack time!');
+    this.addSnackCarts();
     break;
   }
+  this.world.turn();
 
   this.gameStats.turns++;
 };
@@ -116,4 +116,13 @@ MileHigh.prototype.checkForPairing = function () {
       traveler.pair(newLocation);
     });
   }
+};
+
+/**
+ * Resets player to initial state and clears all pairings
+ */
+MileHigh.prototype.resetPlayerState = function () {
+  this.world.findPairedTravelersARandomPlaceToSit();
+  this.world.clearAllPairings();
+  this.player.state = World.PlayerState.HORNY;
 };
