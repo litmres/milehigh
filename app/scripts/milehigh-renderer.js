@@ -20,6 +20,12 @@ MileHigh.renderSimpleSquare = function (ctx, row, col, fillStyle) {
   ctx.fillRect(x, y, width, height);
 };
 
+MileHigh.renderImageData = function (ctx, row, col, img) {
+  var x = row * MileHigh.PIECE_SIZE;
+  var y = col * MileHigh.PIECE_SIZE;
+  ctx.drawImage(img, x, y);
+};
+
 MileHigh.prototype.render = function (ctx, width, height) {
   this.beginRendering(ctx, width, height);
   this.renderPlane(ctx, this.world.planeLayout, width, height);

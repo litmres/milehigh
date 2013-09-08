@@ -1,3 +1,4 @@
+html {height:100%;}
 body {
   background:#020;
   color:#0d0;
@@ -5,6 +6,11 @@ body {
   text-align: center;
   margin:0;
   overflow: hidden;
+  background: #c9dbe9;
+  background: -webkit-linear-gradient(top, #9cf 0%, #cbe0f5 100%);
+  background: -linear-gradient(top, #9cf 0%, #cbe0f5 100%);
+  background: -moz-linear-gradient(top, #9cf 0%, #cbe0f5 100%);
+  height:100%;
 }
 
 * {
@@ -17,8 +23,8 @@ body {
   width: 980px;
   margin:0 auto;
   text-align: center;
-  position:absolute;top:0;left:50%;
-  margin-left:-465px;
+  position:absolute;top:50%;left:50%;
+  margin-left:-465px;margin-top:-200px;
 }
 
 .alert {
@@ -43,6 +49,8 @@ canvas {
   height:225px;
   margin:0 auto;
   background-color:#425454;
+  background-image:url(../pix/floor.gif);
+  background-repeat:repeat;
 }
 
 .title {
@@ -71,10 +79,6 @@ canvas {
 
 #clouds {
   padding: 100px 0;
-  background: #c9dbe9;
-  background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-  background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
-  background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
 }
 
 /*Time to finalise the cloud shape*/

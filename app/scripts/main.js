@@ -47,12 +47,16 @@
   var imgSeat = new Image();
   imgSeat.src = 'pix/seat.gif';
 
-  var imgFloor = new Image();
-  imgFloor.src = 'pix/floor.gif';
+  var imgPlayer = new Image();
+  imgPlayer.src = 'pix/face.gif';
 
-  imgSeat.onload = function() {
+  var imgTrav = new Image();
+  imgTrav.src = 'pix/trav.gif';
+
+  imgPlayer.onload = function() {//i know, i know
     window.imgSeat = imgSeat;
-    window.imgFloor = imgFloor;
+    window.imgPlayer = imgPlayer;
+    window.imgTrav = imgTrav;
     start();
   };
 

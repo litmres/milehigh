@@ -40,7 +40,7 @@ MileHigh.prototype.renderPlane = function (ctx, boardWidth, boardHeight) {
   }
 
   function renderIsle (row, col) {
-    renderImageData(row, col, window.imgFloor);
+    //renderImageData(row, col, window.imgFloor);//this happens in dom
   }
 
   ctx.clearRect(0, 0, boardWidth, boardHeight);

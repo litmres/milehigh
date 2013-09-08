@@ -28,6 +28,9 @@ Attendant.prototype.move = function () {
  * Checks if attendant and cart are on a square at x
  */
 Attendant.prototype.hitTest = function (location) {
+  if (this.inSeat) {
+    return false;
+  }
   // check for aisle match
   if (this.y !== location.y) {
     return false;
