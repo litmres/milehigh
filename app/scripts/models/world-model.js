@@ -33,7 +33,8 @@ World.Obstacle = {
   'LANDING': 1,
   'TURBULENCE': 2,
   'SNACKS': 3,
-  'TERRIST': 4
+  'TERRIST': 4,
+  'TURBULENCE_IMMINENT': 5
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;

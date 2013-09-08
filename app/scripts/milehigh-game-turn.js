@@ -61,8 +61,15 @@ MileHigh.prototype.playTurn = function () {
   case World.Obstacle.LANDING:
     this.gameOver();
     break;
+  case World.Obstacle.TURBULENCE_IMMINENT:
+    this.seatBeltsAlert();
+    break;
   case World.Obstacle.TURBULENCE:
-    this.addTurbulence();
+    if (this.isTurbulenceOver()) {
+      this.removeTurbulence();
+    } else {
+      this.addTurbulence();
+    }
     break;
   case World.Obstacle.SNACKS:
     console.log('snack time!');
