@@ -101,6 +101,10 @@ MileHigh.prototype.checkForFlirting = function () {
  * Check heat levels on nearby travelers and see if we should become paired.
  */
 MileHigh.prototype.checkForPairing = function () {
+  if (this.world.currentObstacle === World.Obstacle.TURBULENCE ||
+      this.world.currentObstacle === World.Obstacle.TURBULENCE_IMMINENT) {
+    return;
+  }
   var near = this.world.getNearbyTravelers();
 
   if (near.length === 0) {  // revert to horny state if moved away
