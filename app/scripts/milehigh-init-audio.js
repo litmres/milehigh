@@ -88,25 +88,25 @@ MileHigh.prototype.initAudio = function () {
   }
 
   function playAudioWhistle() {
-    makeAudio('CustomSine', 800, 0.8);
+    makeAudio('CustomSine', 400, 0.6);
     setTimeout(function() {
-      setFreq(1200);
+      setFreq(600);
       setTimeout(function() {
         stopAudio();
         setTimeout(function() {
-          makeAudio('CustomSine', 800, 0.8);
+          makeAudio('CustomSine', 400, 0.6);
           setTimeout(function() {
-            setFreq(1000);
+            setFreq(500);
             setTimeout(function() {
-              setFreq(800);
+              setFreq(400);
               setTimeout(function() {
                 stopAudio();
-              }, 400);
-            }, 200);
-          }, 200);
+              }, 200);
+            }, 100);
+          }, 100);
         }, 100);
-      }, 200);
-    }, 400);
+      }, 100);
+    }, 200);
   }
 
   function playAudioPlayerMove() {

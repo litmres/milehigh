@@ -47,11 +47,11 @@ MileHigh.prototype.initControls = function (player) {
     e.preventDefault();
     if (touchEvent.startY > touchEvent.stopY + 100) {
       move('up');
-    } else if (touchEvent.startY < touchEvent.stopY - 75) {
+    } else if (touchEvent.startY < touchEvent.stopY - 50) {
       move('down');
-    } else if (touchEvent.startX > touchEvent.stopX - 75) {
+    } else if (touchEvent.startX > touchEvent.stopX - 50) {
       move('left');
-    } else if (touchEvent.startX < touchEvent.stopX + 75) {
+    } else if (touchEvent.startX < touchEvent.stopX + 50) {
       move('right');
     }
   }

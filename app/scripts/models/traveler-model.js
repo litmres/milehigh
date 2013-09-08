@@ -27,6 +27,9 @@ Traveler.prototype.pair = function (newPosition) {
   this.paired = true;
   this.x = newPosition.x;
   this.y = newPosition.y;
+  var playerMove = new CustomEvent('audio', {detail: 'whistle'});
+  window.dispatchEvent(playerMove);
+
 };
 
 Traveler.prototype.unpair = function () {
