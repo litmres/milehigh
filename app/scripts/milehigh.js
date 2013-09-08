@@ -3,7 +3,7 @@
 
 'use strict';
 
-var MileHigh = function () {
+var MileHigh = function (board) {
 
   var TOTAL_TRAVELERS = 20;
 
@@ -36,12 +36,11 @@ var MileHigh = function () {
     '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###',
     '#OO# OOOOOOOOOOO O OOOOOOOOOOOOOO###'
   ];
-
   this.player = this.initPlayer();
   this.world = new World(seven6seven, TOTAL_TRAVELERS, this.player);
   if (window.AudioContext) {
     this.audio = this.initAudio();
   }
-  this.controls = this.initControls(this.player);
+  this.controls = this.initControls(this.player, board);
   this.gameStats = new GameStats();
 };

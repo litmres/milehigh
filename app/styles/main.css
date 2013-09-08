@@ -5,8 +5,15 @@ body {
   text-align: center;
 }
 
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; 
+}
+
 .main {
   width: 980px;
+  margin:0 auto;
   text-align: center;
 }
 
@@ -19,14 +26,14 @@ canvas {
 
 .title {
   text-align: center;
-  font-size: 2em;
+  font-size: 1em;
   color: #080;
 }
 
 .instructions {
   text-align: center;
-  /*font-size: 2em;*/
   color: #080;
+  padding:1em;;
 }
 
 .debug {

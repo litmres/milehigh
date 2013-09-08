@@ -18,7 +18,7 @@
     board.height = '225';
   })();
 
-  var milehigh = new MileHigh();
+  var milehigh = new MileHigh(board);
 
   function tick(timestamp) {
     milehigh.renderPlane(ctx, milehigh.world.planeLayout, board.width, board.height);
@@ -35,6 +35,11 @@
 
   function start() {
     loop();
+    /** To scroll past URL on iPhone (not needed on iPad) **/
+    window.addEventListener('load', function() {
+      window.scrollTo(0, 1);
+    }, false);
   }
   start();
+
 })();
