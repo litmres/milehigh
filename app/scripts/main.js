@@ -18,7 +18,7 @@
     board.height = '225';
   })();
 
-  var milehigh = new MileHigh(board);
+  var milehigh = new MileHigh();
 
   function tick(timestamp) {
     milehigh.beginRendering(ctx, board.width, board.height);

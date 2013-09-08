@@ -3,7 +3,7 @@
 
 'use strict';
 
-var MileHigh = function (board) {
+var MileHigh = function () {
 
   var TOTAL_TRAVELERS = 20;
 
@@ -41,7 +41,7 @@ var MileHigh = function (board) {
   if (window.AudioContext) {
     this.audio = this.initAudio();
   }
-  this.controls = this.initControls(this.player, board);
+  this.controls = this.initControls(this.player);
   this.gameStats = new GameStats();
   this.initObstacles();
 };
