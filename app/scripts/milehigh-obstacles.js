@@ -34,8 +34,15 @@ MileHigh.prototype.getObstacle = function () {
   return null;
 };
 
-MileHigh.prototype.isLanding = function () {
+MileHigh.prototype.obstacleInProgress = function () {
   if (this.world.currentObstacle) {
+    return true;
+  }
+  return false;
+};
+
+MileHigh.prototype.isLanding = function () {
+  if (this.obstacleInProgress()) {
     return false;
   }
   // return time spent > max time
@@ -50,7 +57,7 @@ MileHigh.prototype.hasTurbulence = function () {
       return false;
     }
   } else {
-    if (this.world.currentObstacle) {
+    if (this.obstacleInProgress()) {
       return false;
     }
     return Math.random() < this.turbulenceProbability;
@@ -58,7 +65,7 @@ MileHigh.prototype.hasTurbulence = function () {
 };
 
 MileHigh.prototype.hasSnacks = function () {
-  if (this.world.currentObstacle) {
+  if (this.obstacleInProgress()) {
     return false;
   }
   return Math.random() < this.snackProbability;
