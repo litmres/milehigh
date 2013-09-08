@@ -3,7 +3,7 @@
 
 'use strict';
 
-var MileHigh = function (board) {
+var MileHigh = function () {
 
   var TOTAL_TRAVELERS = 20;
 
@@ -41,7 +41,7 @@ var MileHigh = function (board) {
   if (window.AudioContext) {
     this.audio = this.initAudio();
   }
-  this.controls = this.initControls(this.player, board);
+  this.controls = this.initControls(this.player);
   this.gameStats = new GameStats();
   this.initObstacles();
 };
@@ -53,17 +53,17 @@ MileHigh.prototype.beginRendering = function (ctx, width, height) {
     ctx.save();
 
     if (this.world.currentObstacle === World.Obstacle.TURBULENCE) {
-        var r1 = Math.random(), r2 = Math.random(), off1 = r1 * 10, off2 = r2 * 10;
-        this.jiggleX = (r1 * 10) % 2 === 0 ? -off1 : off1;
-        this.jiggleY = (r2 * 10) % 2 === 0 ? -off2 : off2;
+      var r1 = Math.random(), r2 = Math.random(), off1 = r1 * 10, off2 = r2 * 10;
+      this.jiggleX = (r1 * 10) % 2 === 0 ? -off1 : off1;
+      this.jiggleY = (r2 * 10) % 2 === 0 ? -off2 : off2;
 
-        ctx.translate(this.jiggleX, this.jiggleY);
+      ctx.translate(this.jiggleX, this.jiggleY);
     } else {
-        ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
     }
-};
+  };
 
 MileHigh.prototype.endRendering = function (ctx) {
     ctx.translate(-this.jiggleX, -this.jiggleY);
     ctx.restore();
-};
+  };

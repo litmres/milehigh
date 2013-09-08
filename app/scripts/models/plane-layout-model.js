@@ -54,7 +54,18 @@ PlaneLayout.prototype.isSeatTaken = function (seat, arrayOfExistingSeats) {
   }
 };
 
+PlaneLayout.prototype.isLocationOutOfBounds = function (location) {
+  // do some bounds checking
+  if ((location.y < 0) || (location.x < 0) || (location.y > this.height - 1) || (location.x > this.width - 1)) {
+    return true;
+  }
+  return false;
+};
+
 PlaneLayout.prototype.isLocationASeat = function (location) {
+  if (this.isLocationOutOfBounds(location)) {
+    return false;
+  }
   if (this.planeLayout[location.y][location.x] === 'O') {
     return true;
   }
@@ -62,6 +73,9 @@ PlaneLayout.prototype.isLocationASeat = function (location) {
 };
 
 PlaneLayout.prototype.isLocationALavatory = function (location) {
+  if (this.isLocationOutOfBounds(location)) {
+    return false;
+  }
   if (this.planeLayout[location.y][location.x] === '+') {
     return true;
   }
@@ -71,6 +85,10 @@ PlaneLayout.prototype.isLocationALavatory = function (location) {
 PlaneLayout.prototype.isLocationUnMoveable = function (currentLocation, newLocation) {
   var x = newLocation.x,
     y = newLocation.y;
+
+  if (this.isLocationOutOfBounds(newLocation)) {
+    return true;
+  }
 
   switch (this.planeLayout[y][x]) {
   case 'O':

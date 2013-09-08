@@ -15,8 +15,10 @@
             <div class="title">MileHigh</div>
             <canvas id="gameCanvas"></canvas>
             <div class="title">Your score is <span id="score">0</span></div>
-            <div class="instructions">Instructions: Use your browser arrow keys to move around. Flirt with folks, invite them to the lavatory, and score. Try flirting with multiple people at once.</div>
-            <div class="debug">Debug: Turn <span id="turnCounter" /></div>
+            <div class="instruction-panel">Instructions: Use your browser arrow keys to move around. Flirt with folks, invite them to the lavatory, and score. Try flirting with multiple people at once.</div>
+            <div class="score-panel">Turn: <span id="turnCounter"></span> Turns left: <span id="turnsLeftCounter"></span></div>
+            <div id="turbulence-alert" class="alert hide">Turbulence!</div>
+            <div id="gameover-alert" class="alert hide">Game Over</div>
         </div>
         <!--[if lt IE 9]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

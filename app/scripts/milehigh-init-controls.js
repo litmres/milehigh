@@ -2,8 +2,11 @@
 /*jshint unused: false */
 'use strict';
 
-MileHigh.prototype.initControls = function (player, board) {
+MileHigh.prototype.initControls = function (player) {
+
   var world = this.world;
+  var touchEvent = {};
+
   function move(direction) {
     var playerMove = new CustomEvent('audio', {detail: 'playerMove'});
     window.dispatchEvent(playerMove);
@@ -26,35 +29,48 @@ MileHigh.prototype.initControls = function (player, board) {
     }
   }
 
-  function pickDirection(e) {
-    if (e.keyCode === 37) {
-      return 'left';
-    } else if (e.keyCode === 38) {
-      return 'up';
-    } else if (e.keyCode === 39) {
-      return 'right';
-    } else if (e.keyCode === 40) {
-      return 'down';
-      /* Doesn't work well, but at least is kinda playable on mobile Safari, now */
-    } else if (e.clientX && e.clientY) {
-      if (e.clientX < (board.offsetWidth * 0.2)) {
-        return 'left';
-      } else if (e.clientX > (board.offsetWidth * 0.8)) {
-        return 'right';
-      } else if (e.clientY < (board.offsetHeight * 0.3)) {
-        return 'up';
-      } else if (e.clientY > (board.offsetHeight * 0.8)) {
-        return 'down';
-      }
+  function touchStart(e) {
+    event.preventDefault();
+    if (e.touches.length === 1) {
+      touchEvent.startX = e.touches[0].pageX;
+      touchEvent.startY = e.touches[0].pageY;
     }
   }
 
-  board.addEventListener('click',function(e) {
-    move(pickDirection(e));
-  }, false);
+  function touchMove(e) {
+    e.preventDefault();
+    touchEvent.stopX = e.touches[0].pageX;
+    touchEvent.stopY = e.touches[0].pageY;
+  }
 
-  window.addEventListener('keydown', function(e) {
-    move(pickDirection(e));
-  }, false);
+  function touchEnd(e) {
+    e.preventDefault();
+    if (touchEvent.startY > touchEvent.stopY + 100) {
+      move('up');
+    } else if (touchEvent.startY < touchEvent.stopY - 50) {
+      move('down');
+    } else if (touchEvent.startX > touchEvent.stopX - 50) {
+      move('left');
+    } else if (touchEvent.startX < touchEvent.stopX + 50) {
+      move('right');
+    }
+  }
+
+  function keyDown(e) {
+    if (e.keyCode === 37) {
+      move('left');
+    } else if (e.keyCode === 38) {
+      move('up');
+    } else if (e.keyCode === 39) {
+      move('right');
+    } else if (e.keyCode === 40) {
+      move('down');
+    }
+  }
+
+  window.addEventListener('keydown', keyDown, false);
+  window.addEventListener('touchstart', touchStart, false);
+  window.addEventListener('touchmove', touchMove, false);
+  window.addEventListener('touchend', touchEnd, false);
 };
 
