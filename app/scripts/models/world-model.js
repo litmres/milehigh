@@ -318,6 +318,9 @@ World.prototype.turn = function () {
   // Move attendants
   this.attendants.forEach(function (a) {
     if (!a.inSeat) {
+      if (this.currentObstacle === World.Obstacle.TURBULENCE) {
+        a.returnToSeat();
+      }
       if (this.isAttendantAtEndOfAisle(a)) {
         a.sit();
       } else {

@@ -94,7 +94,7 @@ MileHigh.prototype.addTurbulence = function () {
   }
   // Reset player heat levels
   this.world.resetTravelerHeatLevels();
-  //
+  
   // Play ding
   var seatbelts = new CustomEvent('audio', {detail: 'seatBelts'});
   window.dispatchEvent(seatbelts);
