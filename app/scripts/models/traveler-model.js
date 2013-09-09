@@ -15,6 +15,7 @@ function Traveler (id, opts) {
   this.encounters = 0; // number of times in bathroom
   this.blocks = 0; // number of times bathroom encounters failed
   this.paired = false;
+  this.moving = false;
   // other possible properties: frigidity or looseness, type: (flight
   // attendant, pilot, ...)
 }
@@ -35,3 +36,8 @@ Traveler.prototype.pair = function (newPosition) {
 Traveler.prototype.unpair = function () {
   this.paired = false;
 };
+
+Traveler.prototype.canMove = function () {
+  return (this.heat === 0) && !this.paired;
+};
+

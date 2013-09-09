@@ -32,6 +32,7 @@ MileHigh.prototype.playTurn = function () {
   /* GAME RULES CALLED FROM HERE */
   //console.log('running logic for this turn ', this.lastTurnTime);
 
+  this.moveNPOs();
   // There can be many states for the player.  Without implementing a damn
   // state machine, we need to use a basic switch statement to determine
   // which rules to apply.
@@ -72,7 +73,6 @@ MileHigh.prototype.playTurn = function () {
     this.addSnackCarts();
     break;
   }
-  this.world.turn();
 
   this.gameStats.turns++;
 };
@@ -132,4 +132,48 @@ MileHigh.prototype.resetPlayerState = function () {
   this.world.findPairedTravelersARandomPlaceToSit();
   this.world.clearAllPairings();
   this.player.state = World.PlayerState.HORNY;
+};
+
+MileHigh.prototype.moveAttendants = function () {
+  // Move attendants
+  this.world.attendants.forEach(function (a) {
+    if (!a.inSeat) {
+      if (this.currentObstacle === World.Obstacle.TURBULENCE) {
+        a.returnToSeat();
+      }
+      if (this.isAttendantAtEndOfAisle(a)) {
+        a.sit();
+      } else {
+        if (this.canAttendantMoveTo({x: a.getNextMoveCartLocationX(), y: a.y})) {
+          a.move();
+        }
+      }
+    }
+  }, this.world);
+};
+
+MileHigh.prototype.moveTravelers = function () {
+
+  this.world.travelers.forEach(function (t) {
+    // skip pairing travelers
+    if (t.canMove()) {
+      // skip randomly
+      if (!t.moving && (Math.random() <= World.NPO_MOVE_PROBABILITY)) {
+        this.moveTraveler(t);
+        this.numMovingNPOs++;
+      }
+    }
+  }, this.world);
+};
+
+/**
+ * Handles per-turn NPO logic
+ */
+MileHigh.prototype.moveNPOs = function () {
+
+  this.moveAttendants();
+
+  if (this.world.numMovingNPOs < World.MAX_MOVING_NPOS) {
+    this.moveTravelers();
+  }
 };

@@ -11,6 +11,7 @@ function World(planeLayoutIn, totalTravelers, player) {
   this.currentObstacle = null;
   this.travelers = [];
   this.attendants = [];
+  this.numMovingNPOs = 0;
   this.initRandomTravelersAtSpecificSeats(totalTravelers);
   this.initCrew();
 }
@@ -38,6 +39,8 @@ World.Obstacle = {
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;
+World.NPO_MOVE_PROBABILITY = 0.1;
+World.MAX_MOVING_NPOS = 5;
 
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
   var seatTaken,
@@ -311,25 +314,11 @@ World.prototype.canAttendantMoveTo = function (location) {
       (this.player.x === location.x && this.player.y === location.y));
 };
 
-/**
- * Called each turn - updates non-player objects
+/** 
+ * Moves traveler one position
  */
-World.prototype.turn = function () {
-  // Move random travelers
-  // Move attendants
-  this.attendants.forEach(function (a) {
-    if (!a.inSeat) {
-      if (this.currentObstacle === World.Obstacle.TURBULENCE) {
-        a.returnToSeat();
-      }
-      if (this.isAttendantAtEndOfAisle(a)) {
-        a.sit();
-      } else {
-        if (this.canAttendantMoveTo({x: a.getNextMoveCartLocationX(), y: a.y})) {
-          a.move();
-        }
-      }
-    }
-  }, this);
+World.prototype.moveTraveler = function (traveler) {
+  console.log('moving passenger', traveler);
+  traveler.moving = true;
 };
 
