@@ -30,7 +30,7 @@ MileHigh.prototype.getObstacle = function () {
   // Turbulence?
   if (this.hasTurbulenceWarning()) {
     return World.Obstacle.TURBULENCE_IMMINENT;
-  } 
+  }
   else if (this.hasTurbulence()) {
     return World.Obstacle.TURBULENCE;
   }
