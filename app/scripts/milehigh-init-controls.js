@@ -3,74 +3,60 @@
 'use strict';
 
 MileHigh.prototype.initControls = function (player) {
+  var world = this.world,
+      touch = {};
 
-  var world = this.world;
-  var touchEvent = {};
-
-  function move(direction) {
+  function move(dir) {
     var playerMove = new CustomEvent('audio', {detail: 'playerMove'});
     window.dispatchEvent(playerMove);
-    if (direction === 'left') {
-      if (world.canIMoveLeft()) {
-        player.x--;
-      }
-    } else if (direction === 'right') {
-      if (world.canIMoveRight()) {
-        player.x++;
-      }
-    } else if (direction === 'up') {
-      if (world.canIMoveUp()) {
-        player.y--;
-      }
-    } else if (direction === 'down') {
-      if (world.canIMoveDown()) {
-        player.y++;
-      }
+    if (dir === 'L' && world.canIMoveLeft()) {
+      player.x--;
+    } else if (dir === 'R' && world.canIMoveRight()) {
+      player.x++;
+    } else if (dir === 'U' && world.canIMoveUp()) {
+      player.y--;
+    } else if (dir === 'D' && world.canIMoveDown()) {
+      player.y++;
     }
   }
 
-  function touchStart(e) {
-    event.preventDefault();
-    if (e.touches.length === 1) {
-      touchEvent.startX = e.touches[0].pageX;
-      touchEvent.startY = e.touches[0].pageY;
-    }
-  }
-
-  function touchMove(e) {
+  window.addEventListener('keydown', function(e) {
     e.preventDefault();
-    touchEvent.stopX = e.touches[0].pageX;
-    touchEvent.stopY = e.touches[0].pageY;
-  }
-
-  function touchEnd(e) {
-    e.preventDefault();
-    if (touchEvent.startY > touchEvent.stopY + 100) {
-      move('up');
-    } else if (touchEvent.startY < touchEvent.stopY - 50) {
-      move('down');
-    } else if (touchEvent.startX > touchEvent.stopX - 50) {
-      move('left');
-    } else if (touchEvent.startX < touchEvent.stopX + 50) {
-      move('right');
-    }
-  }
-
-  function keyDown(e) {
     if (e.keyCode === 37) {
-      move('left');
+      move('L');
     } else if (e.keyCode === 38) {
-      move('up');
+      move('U');
     } else if (e.keyCode === 39) {
-      move('right');
+      move('R');
     } else if (e.keyCode === 40) {
-      move('down');
+      move('D');
     }
-  }
+  }, false);
 
-  window.addEventListener('keydown', keyDown, false);
-  window.addEventListener('touchstart', touchStart, false);
-  window.addEventListener('touchmove', touchMove, false);
-  window.addEventListener('touchend', touchEnd, false);
+  window.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    if (e.touches.length === 1) {
+      touch.startX = e.touches[0].pageX;
+      touch.startY = e.touches[0].pageY;
+    }
+  }, false);
+
+  window.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    touch.stopX = e.touches[0].pageX;
+    touch.stopY = e.touches[0].pageY;
+  }, false);
+
+  window.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    if (touch.startY > touch.stopY + 100) {
+      move('U');
+    } else if (touch.startY < touch.stopY - 50) {
+      move('D');
+    } else if (touch.startX > touch.stopX - 50) {
+      move('L');
+    } else if (touch.startX < touch.stopX + 50) {
+      move('R');
+    }
+  }, false);
 };
-

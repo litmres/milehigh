@@ -3,22 +3,21 @@
 'use strict';
 
 MileHigh.prototype.initAudio = function () {
-  var world = this.world,
-      actx = new AudioContext(),
+  var actx = new AudioContext(),
       freq,
       osc,
       amp = null;
 
   function makeCustomSine() {
-    var sineLength = 10,
-        sine1 = new Float32Array(sineLength),
-        sine2 = new Float32Array(sineLength),
+    var length = 10,
+        sine1 = new Float32Array(length),
+        sine2 = new Float32Array(length),
         i = null;
-    for (i = 0; i < sineLength; i++) {
-      sine1[i] = Math.sin(Math.PI * i / sineLength);
+    for (i = 0; i < length; i++) {
+      sine1[i] = Math.sin(Math.PI * i / length);
     }
-    for (i = 0; i < sineLength; i++) {
-      sine2[i] = Math.cos(Math.PI * i / sineLength);
+    for (i = 0; i < length; i++) {
+      sine2[i] = Math.cos(Math.PI * i / length);
     }
     return actx.createWaveTable(sine1, sine2);
   }
@@ -38,14 +37,8 @@ MileHigh.prototype.initAudio = function () {
       osc.setWaveTable(makeCustomSine());
     } else if (type === 'CustomSquare') {
       osc.setWaveTable(makeCustomSquare());
-    } else if (type === 'Sine') {
-      osc.type = 0;
     } else if (type === 'Square') {
       osc.type = 1;
-    } else if (type === 'Sawtooth') {
-      osc.type = 2;
-    } else if (type === 'Triangle') {
-      osc.type = 3;
     }
   }
 
@@ -79,50 +72,38 @@ MileHigh.prototype.initAudio = function () {
     startAudio();
   }
 
-  function playAudioSeatBelts() {
-    makeAudio('CustomSquare', 293.66, 0.6);
-    setTimeout(function() {
-      setFreq(246.94);
-      setTimeout(stopAudio, 500);
-    }, 500);
-  }
-
-  function playAudioWhistle() {
-    makeAudio('CustomSine', 400, 0.6);
-    setTimeout(function() {
-      setFreq(600);
+  function playAudio(e) {
+    if (e.detail === 'seatBelts') {
+      makeAudio('CustomSquare', 293.66, 0.6);
       setTimeout(function() {
-        stopAudio();
+        setFreq(246.94);
+        setTimeout(stopAudio, 500);
+      }, 500);
+    }
+    if (e.detail === 'whistle') {
+      makeAudio('CustomSine', 400, 0.6);
+      setTimeout(function() {
+        setFreq(600);
         setTimeout(function() {
-          makeAudio('CustomSine', 400, 0.6);
+          stopAudio();
           setTimeout(function() {
-            setFreq(500);
+            makeAudio('CustomSine', 400, 0.6);
             setTimeout(function() {
-              setFreq(400);
+              setFreq(500);
               setTimeout(function() {
-                stopAudio();
-              }, 200);
+                setFreq(400);
+                setTimeout(function() {
+                  stopAudio();
+                }, 200);
+              }, 100);
             }, 100);
           }, 100);
         }, 100);
-      }, 100);
-    }, 200);
-  }
-
-  function playAudioPlayerMove() {
-    makeAudio('Square', 98, 0.4);
-    setTimeout(stopAudio, 30);
-  }
-
-  function playAudio(e) {
-    if (e.detail === 'seatBelts') {
-      playAudioSeatBelts();
-    }
-    if (e.detail === 'whistle') {
-      playAudioWhistle();
+      }, 200);
     }
     if (e.detail === 'playerMove') {
-      playAudioPlayerMove();
+      makeAudio('Square', 98, 0.4);
+      setTimeout(stopAudio, 30);
     }
   }
 
