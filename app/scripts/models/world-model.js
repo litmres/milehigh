@@ -39,8 +39,9 @@ World.Obstacle = {
 };
 
 World.PAIRING_HEAT_THRESHOLD = 10;
-World.NPO_MOVE_PROBABILITY = 0.1;
-World.MAX_MOVING_NPOS = 5;
+World.NPO_MOVE_PROBABILITY = 0.05;
+World.MAX_MOVING_NPOS = 3;
+World.MAX_TRAVELER_LAVATORY_OCCUPANCY_TURNS = 3;
 
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
   var seatTaken,
@@ -91,17 +92,23 @@ World.prototype.spaceNotAvailableToMoveTo = function (currentLocation, locationT
     }
   }
   // make sure not attendant or cart are there
-  for (var i = 0; i < this.attendants.length; i++) {
-    if (this.attendants[i].hitTest(locationToCheck)) {
-      return true;
-    }
+  if (this.isAttendantAtLocation(locationToCheck)) {
+    return true;
   }
 
   return false;
 };
 
-World.prototype.canIMoveLeft = function () {
-  var currentLocation = {x: this.player.x, y: this.player.y};
+World.prototype.isAttendantAtLocation = function (locationToCheck) {
+  for (var i = 0; i < this.attendants.length; i++) {
+    if (this.attendants[i].hitTest(locationToCheck)) {
+      return true;
+    }
+  }
+};
+
+World.prototype.canIMoveLeft = function (me) {
+  var currentLocation = {x: me.x, y: me.y};
   if (this.planeLayout.atLeftEdge(currentLocation)) {
     return false;
   }
@@ -111,8 +118,8 @@ World.prototype.canIMoveLeft = function () {
   return true;
 };
 
-World.prototype.canIMoveRight = function () {
-  var currentLocation = {x: this.player.x, y: this.player.y};
+World.prototype.canIMoveRight = function (me) {
+  var currentLocation = {x: me.x, y: me.y};
   if (this.planeLayout.atRightEdge(currentLocation)) {
     return false;
   }
@@ -122,8 +129,8 @@ World.prototype.canIMoveRight = function () {
   return true;
 };
 
-World.prototype.canIMoveUp = function () {
-  var currentLocation = {x: this.player.x, y: this.player.y};
+World.prototype.canIMoveUp = function (me) {
+  var currentLocation = {x: me.x, y: me.y};
   if (this.planeLayout.atTopEdge(currentLocation)) {
     return false;
   }
@@ -133,8 +140,8 @@ World.prototype.canIMoveUp = function () {
   return true;
 };
 
-World.prototype.canIMoveDown = function () {
-  var currentLocation = {x: this.player.x, y: this.player.y};
+World.prototype.canIMoveDown = function (me) {
+  var currentLocation = {x: me.x, y: me.y};
   if (this.planeLayout.atBottomEdge(currentLocation)) {
     return false;
   }
@@ -159,6 +166,17 @@ World.prototype.getTravelerAtLocation = function (location) {
     }
   }
   return traveler;
+};
+
+World.prototype.getClosestAisle = function (locationY) {
+  var closest = this.planeLayout.aisles[0];
+
+  for (var i = 1; i < this.planeLayout.aisles.length; i++) {
+    if (Math.abs(this.planeLayout.aisles[i] - locationY) < closest) {
+      closest = this.planeLayout.aisles[i];
+    }
+  }
+  return closest;
 };
 
 /**
@@ -266,21 +284,49 @@ World.prototype.playerInLavatory = function () {
   return false;
 };
 
-World.prototype.findPairedTravelersARandomPlaceToSit = function () {
-  var pairedTravelers = this.pairedTravelers(),
-    seatToTry,
+World.prototype.findTravelersARandomPlaceToSit = function (travelers) {
+  var seatToTry,
     seatTaken,
     planeLayout = this.planeLayout,
-    travelers = this.travelers;
-  pairedTravelers.forEach(function (traveler) {
+    allTravelers = this.travelers;
+
+  travelers.forEach(function (t) {
     seatTaken = true;
+
     while (seatTaken) {
       seatToTry = planeLayout.findRandomSeat();
-      seatTaken = planeLayout.isSeatTaken(seatToTry, travelers);
+      seatTaken = planeLayout.isSeatTaken(seatToTry, allTravelers);
     }
-    traveler.x = seatToTry.x;
-    traveler.y = seatToTry.y;
+    t.x = seatToTry.x;
+    t.y = seatToTry.y;
   });
+};
+
+/**
+ * Finds closest lav to some person
+ * @return {Object} x, y location of lav
+ */
+World.prototype.findClosestLavatoryTo = function (p) {
+  var dist, minDist = this.planeLayout.width * 2;
+  var loc, closest;
+
+  this.planeLayout.lavs.forEach(function (l) {
+    dist = this.getCartesianDistance(p, l);
+
+    if (dist < minDist) {
+      minDist = dist;
+      closest = l;
+    }
+  }, this);
+  return closest;
+};
+
+/**
+ * Returns distance b/w 2 locations
+ * @return {Number}
+ */
+World.prototype.getCartesianDistance = function (p1, p2) {
+  return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
 };
 
 World.prototype.clearAllPairings = function () {
@@ -317,8 +363,53 @@ World.prototype.canAttendantMoveTo = function (location) {
 /** 
  * Moves traveler one position
  */
-World.prototype.moveTraveler = function (traveler) {
-  console.log('moving passenger', traveler);
+World.prototype.startTravelerTripToLavatory = function (traveler) {
   traveler.moving = true;
+  traveler.destination = this.findClosestLavatoryTo(traveler);
+  console.log('moving passenger ' + traveler.id + ' to ', traveler.destination);
+  // find closest aisle to target bathroom
+  traveler.targetAisle = this.getClosestAisle(traveler.destination.y);
+  console.log('target aisle: ' + traveler.targetAisle);
 };
 
+World.prototype.moveTraveler = function (traveler) {
+  var px = traveler.x, 
+      py = traveler.y;
+  // move traveler to closer to bathroom, if possible
+  // if in bathroom
+  if (traveler.x === traveler.destination.x && traveler.y === traveler.destination.y) {
+    // increase their turn count
+    traveler.lavatoryUsage++;
+    // if turn count exceeded
+    if (traveler.lavatoryUsage > World.MAX_TRAVELER_LAVATORY_OCCUPANCY_TURNS+1) {
+      // move them back to a random seat
+      this.findTravelersARandomPlaceToSit([traveler]);
+      traveler.lavatoryUsage = 0;
+    }
+    return;
+  }
+  else if (traveler.y === traveler.targetAisle && traveler.x === traveler.destination.x) {
+    py += (traveler.destination.y > traveler.y) ? 1 : -1;
+  } 
+  else if (traveler.y !== traveler.targetAisle) {
+    py += (traveler.targetAisle > traveler.y) ? 1 : -1;
+  }
+  else if (traveler.x !== traveler.destination.x) {
+    px += (traveler.destination.x > traveler.x) ? 1 : -1;
+  }
+  // don't move onto player square
+  if (this.player.x === px && this.player.y === py) {
+    return;
+  }
+  // don't move onto a cart
+  if (this.isAttendantAtLocation({x: px, y: py})) {
+    // if in the aisle
+    if (py === traveler.targetAisle) {
+      // move into seat to get out of the way
+      py += 1;
+    }
+  }
+  // ok to move
+  traveler.x = px;
+  traveler.y = py;
+};

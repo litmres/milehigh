@@ -25,6 +25,19 @@ function PlaneLayout(planeLayoutIn) {
   this.width = firstRowLength;
   this.height = planeLayout.length;
   this.numAisles = this.aisles.length;
+  this.lavs = [];
+
+  var loc;
+  // Keep track of lavatory locations
+  for (var i = 0; i < this.width; i++) {
+    for (var j = 0; j < this.height; j++) {
+      loc = {x: i, y: j};
+
+      if (this.isLocationALavatory(loc)) {
+        this.lavs.push(loc);
+      }
+    }
+  }
 }
 
 PlaneLayout.prototype.arrayForRender = function () {

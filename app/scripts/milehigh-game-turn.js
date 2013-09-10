@@ -129,7 +129,7 @@ MileHigh.prototype.checkForPairing = function () {
  * Resets player to initial state and clears all pairings
  */
 MileHigh.prototype.resetPlayerState = function () {
-  this.world.findPairedTravelersARandomPlaceToSit();
+  this.world.findTravelersARandomPlaceToSit(this.world.pairedTravelers());
   this.world.clearAllPairings();
   this.player.state = World.PlayerState.HORNY;
 };
@@ -158,8 +158,12 @@ MileHigh.prototype.moveTravelers = function () {
     // skip pairing travelers
     if (t.canMove()) {
       // skip randomly
-      if (!t.moving && (Math.random() <= World.NPO_MOVE_PROBABILITY)) {
-        this.moveTraveler(t);
+      if (t.moving) {
+        this.moveTraveler(t); 
+      } 
+      else if (this.numMovingNPOs < World.MAX_MOVING_NPOS && 
+        Math.random() <= World.NPO_MOVE_PROBABILITY) {
+        this.startTravelerTripToLavatory(t);
         this.numMovingNPOs++;
       }
     }
@@ -173,7 +177,5 @@ MileHigh.prototype.moveNPOs = function () {
 
   this.moveAttendants();
 
-  if (this.world.numMovingNPOs < World.MAX_MOVING_NPOS) {
-    this.moveTravelers();
-  }
+  this.moveTravelers();
 };

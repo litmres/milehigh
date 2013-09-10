@@ -9,13 +9,13 @@ MileHigh.prototype.initControls = function (player) {
   function move(dir) {
     var playerMove = new CustomEvent('audio', {detail: 'playerMove'});
     window.dispatchEvent(playerMove);
-    if (dir === 'L' && world.canIMoveLeft()) {
+    if (dir === 'L' && world.canIMoveLeft(player)) {
       player.x--;
-    } else if (dir === 'R' && world.canIMoveRight()) {
+    } else if (dir === 'R' && world.canIMoveRight(player)) {
       player.x++;
-    } else if (dir === 'U' && world.canIMoveUp()) {
+    } else if (dir === 'U' && world.canIMoveUp(player)) {
       player.y--;
-    } else if (dir === 'D' && world.canIMoveDown()) {
+    } else if (dir === 'D' && world.canIMoveDown(player)) {
       player.y++;
     }
   }
