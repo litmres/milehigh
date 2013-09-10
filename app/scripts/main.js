@@ -45,13 +45,13 @@
   }
 
   var imgSeat = new Image();
-  imgSeat.src = 'pix/seat.gif';
+  imgSeat.src = 'images/seat.gif';
 
   var imgPlayer = new Image();
-  imgPlayer.src = 'pix/face.gif';
+  imgPlayer.src = 'images/face.gif';
 
   var imgTrav = new Image();
-  imgTrav.src = 'pix/trav.gif';
+  imgTrav.src = 'images/trav.gif';
 
   imgPlayer.onload = function() {//i know, i know
     window.imgSeat = imgSeat;
