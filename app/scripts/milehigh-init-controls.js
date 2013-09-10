@@ -21,7 +21,6 @@ MileHigh.prototype.initControls = function (player) {
   }
 
   window.addEventListener('keydown', function(e) {
-    e.preventDefault();
     if (e.keyCode === 37) {
       move('L');
     } else if (e.keyCode === 38) {
