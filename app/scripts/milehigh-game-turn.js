@@ -24,6 +24,8 @@ MileHigh.prototype.nextTurn = function (timestamp) {
  * @param  {number} incrementScoreBy
  */
 MileHigh.prototype.updateScore = function (incrementScoreBy) {
+  var playerScore = new CustomEvent('audio', {detail: 'playerScore'});
+  window.dispatchEvent(playerScore);
   this.score += incrementScoreBy;
   document.getElementById('score').textContent = this.score;
 };

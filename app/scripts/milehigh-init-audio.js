@@ -4,7 +4,6 @@
 
 MileHigh.prototype.initAudio = function () {
   var actx = new AudioContext(),
-      freq,
       osc,
       amp = null;
 
@@ -72,38 +71,61 @@ MileHigh.prototype.initAudio = function () {
     startAudio();
   }
 
-  function playAudio(e) {
-    if (e.detail === 'seatBelts') {
-      makeAudio('CustomSquare', 293.66, 0.6);
+  function playAudioSeatBelts() {
+    makeAudio('CustomSquare', 293.66, 0.6);
+    setTimeout(function() {
+      setFreq(246.94);
+      setTimeout(stopAudio, 500);
+    }, 500);
+  }
+
+  function playAudioWhistle() {
+    makeAudio('CustomSine', 400, 0.6);
+    setTimeout(function() {
+      setFreq(600);
       setTimeout(function() {
-        setFreq(246.94);
-        setTimeout(stopAudio, 500);
-      }, 500);
-    }
-    if (e.detail === 'whistle') {
-      makeAudio('CustomSine', 400, 0.6);
-      setTimeout(function() {
-        setFreq(600);
+        stopAudio();
         setTimeout(function() {
-          stopAudio();
+          makeAudio('CustomSine', 400, 0.6);
           setTimeout(function() {
-            makeAudio('CustomSine', 400, 0.6);
+            setFreq(500);
             setTimeout(function() {
-              setFreq(500);
+              setFreq(400);
               setTimeout(function() {
-                setFreq(400);
-                setTimeout(function() {
-                  stopAudio();
-                }, 200);
-              }, 100);
-            }, 100);
-          }, 100);
-        }, 100);
-      }, 200);
-    }
-    if (e.detail === 'playerMove') {
+                stopAudio();
+              }, 150);
+            }, 50);
+          }, 50);
+        }, 50);
+      }, 50);
+    }, 150);
+  }
+
+  function playAudioPlayerMove() {
       makeAudio('Square', 98, 0.4);
       setTimeout(stopAudio, 30);
+  }
+
+  function playAudioScore() {
+    makeAudio('CustomSine', 587.33, 0.6);
+    setTimeout(function() {
+      setFreq(783.99);
+      setTimeout(stopAudio, 100);
+    }, 100);
+  }
+
+  function playAudio(e) {
+    if (e.detail === 'seatBelts') {
+      playAudioSeatBelts();
+    }
+    if (e.detail === 'whistle') {
+      playAudioWhistle();
+    }
+    if (e.detail === 'playerMove') {
+      playAudioPlayerMove();
+    }
+    if (e.detail === 'playerScore') {
+      playAudioScore();
     }
   }
 
