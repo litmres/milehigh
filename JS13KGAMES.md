@@ -17,4 +17,5 @@ Categories: [X] Desktop  [X] Mobile  [ ] Server
 Short game description: This is a game about trying to get lucky on a plane, but while that's happening, there are many things trying to prevent that from taking place and making you unlucky.
 
 Small screenshot (160px × 160px)
+
 Big screenshot (400px × 250px)
