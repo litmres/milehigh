@@ -161,7 +161,17 @@ MileHigh.prototype.moveTravelers = function () {
     if (t.canMove()) {
       // skip randomly
       if (t.moving) {
-        t.returning ? this.moveTravelerToSeat(t) : this.moveTravelerToLavatory(t); 
+        if (t.returning) {
+          this.moveTravelerToSeat(t);
+        } 
+        else if (this.currentObstacle === World.Obstacle.TURBULENCE_IMMINENT ||
+          this.currentObstacle === World.Obstacle.TURBULENCE) {
+
+          this.startTravelerTripToSeat(t);
+        } 
+        else {
+          this.moveTravelerToLavatory(t); 
+        }
       }
       else if (this.numMovingNPOs < World.MAX_MOVING_NPOS && 
         Math.random() <= World.NPO_MOVE_PROBABILITY) {

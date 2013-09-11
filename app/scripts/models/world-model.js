@@ -38,10 +38,15 @@ World.Obstacle = {
   'TURBULENCE_IMMINENT': 5
 };
 
-World.PAIRING_HEAT_THRESHOLD = 10;
-World.NPO_MOVE_PROBABILITY = 0.05;
-World.MAX_MOVING_NPOS = 3;
+/**
+ * Difficulty settings
+ */
+World.PAIRING_HEAT_THRESHOLD    = 10;
+World.NPO_MOVE_PROBABILITY      = 0.05;
+World.MAX_MOVING_NPOS           = 3;
 World.MAX_TRAVELER_LAVATORY_OCCUPANCY_TURNS = 3;
+World.TURBULENCE_PROBABILITY    = 0.02;
+World.SNACK_PROBABILITY         = 0.1;
 
 World.prototype.initRandomTravelersAtSpecificSeats = function (totalTravelers) {
   var seatTaken,
@@ -369,7 +374,7 @@ World.prototype.startTravelerTripToLavatory = function (traveler) {
   traveler.ogX = traveler.x;
   traveler.ogY = traveler.y;
   traveler.destination = this.findClosestLavatoryTo(traveler);
-  console.log('moving passenger ' + traveler.id + ' to ', traveler.destination);
+  console.log('moving passenger ' + traveler.id + ' to lav at ', traveler.destination);
   // find closest aisle to target bathroom
   traveler.targetAisle = this.getClosestAisle(traveler.destination.y);
   console.log('target aisle: ' + traveler.targetAisle);
