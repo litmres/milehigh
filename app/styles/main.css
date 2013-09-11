@@ -30,6 +30,20 @@ div {
   z-index:100;
 }
 
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .main {
+    margin-left:-50%;
+    margin-top:-30%;;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .main { 
+    margin-left:-50%;
+    margin-top:-46%;
+  }
+}
+
 .alert {
   color: red;
   font-size: 4.8em;

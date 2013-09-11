@@ -22,12 +22,16 @@ MileHigh.prototype.initControls = function (player) {
 
   window.addEventListener('keydown', function(e) {
     if (e.keyCode === 37) {
+      e.preventDefault();
       move('L');
     } else if (e.keyCode === 38) {
+      e.preventDefault();
       move('U');
     } else if (e.keyCode === 39) {
+      e.preventDefault();
       move('R');
     } else if (e.keyCode === 40) {
+      e.preventDefault();
       move('D');
     }
   }, false);
