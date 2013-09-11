@@ -16,6 +16,7 @@ function Traveler (id, opts) {
   this.blocks = 0; // number of times bathroom encounters failed
   this.paired = false;
   this.moving = false;
+  this.returning = false;
   this.lavatoryUsage = 0;
   // other possible properties: frigidity or looseness, type: (flight
   // attendant, pilot, ...)

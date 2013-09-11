@@ -161,8 +161,8 @@ MileHigh.prototype.moveTravelers = function () {
     if (t.canMove()) {
       // skip randomly
       if (t.moving) {
-        this.moveTraveler(t); 
-      } 
+        t.returning ? this.moveTravelerToSeat(t) : this.moveTravelerToLavatory(t); 
+      }
       else if (this.numMovingNPOs < World.MAX_MOVING_NPOS && 
         Math.random() <= World.NPO_MOVE_PROBABILITY) {
         this.startTravelerTripToLavatory(t);

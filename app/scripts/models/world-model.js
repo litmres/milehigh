@@ -365,6 +365,9 @@ World.prototype.canAttendantMoveTo = function (location) {
  */
 World.prototype.startTravelerTripToLavatory = function (traveler) {
   traveler.moving = true;
+  // save original seat location
+  traveler.ogX = traveler.x;
+  traveler.ogY = traveler.y;
   traveler.destination = this.findClosestLavatoryTo(traveler);
   console.log('moving passenger ' + traveler.id + ' to ', traveler.destination);
   // find closest aisle to target bathroom
@@ -372,10 +375,17 @@ World.prototype.startTravelerTripToLavatory = function (traveler) {
   console.log('target aisle: ' + traveler.targetAisle);
 };
 
-World.prototype.moveTraveler = function (traveler) {
-  var px = traveler.x, 
-      py = traveler.y;
-  // move traveler to closer to bathroom, if possible
+World.prototype.startTravelerTripToSeat = function (traveler) {
+  traveler.destination = {x: traveler.ogX, y: traveler.ogY};
+  // find closest aisle to target seat
+  traveler.returning = true;
+  console.log('moving back to seat', traveler.destination);
+};
+
+/**
+ * move traveler to closer to bathroom, if possible
+ */
+World.prototype.moveTravelerToLavatory = function (traveler) {
   // if in bathroom
   if (traveler.x === traveler.destination.x && traveler.y === traveler.destination.y) {
     // increase their turn count
@@ -383,16 +393,41 @@ World.prototype.moveTraveler = function (traveler) {
     // if turn count exceeded
     if (traveler.lavatoryUsage > World.MAX_TRAVELER_LAVATORY_OCCUPANCY_TURNS+1) {
       // move them back to a random seat
-      this.findTravelersARandomPlaceToSit([traveler]);
       traveler.lavatoryUsage = 0;
+      this.startTravelerTripToSeat(traveler); 
     }
-    return;
+  } else {
+    this.moveTraveler(traveler);
   }
-  else if (traveler.y === traveler.targetAisle && traveler.x === traveler.destination.x) {
+};
+
+World.prototype.moveTravelerToSeat = function (traveler) {
+  // if in bathroom
+  if (traveler.x === traveler.destination.x && traveler.y === traveler.destination.y) {
+    // they are back at their seat!
+    traveler.moving = traveler.returning = false;
+    this.numMovingNPOs--;
+    console.log('traveler back at seat!', traveler.destination);
+  } else {
+    this.moveTraveler(traveler);
+  }
+};
+
+// move helper - does collision detection
+World.prototype.moveTraveler = function (traveler) {
+  var px = traveler.x, 
+      py = traveler.y;
+  
+  if (traveler.y === traveler.targetAisle && traveler.x === traveler.destination.x) {
     py += (traveler.destination.y > traveler.y) ? 1 : -1;
   } 
   else if (traveler.y !== traveler.targetAisle) {
-    py += (traveler.targetAisle > traveler.y) ? 1 : -1;
+    // handle returning to seat where seat is 2 squares from an aisle
+    if (traveler.returning && (traveler.x === traveler.destination.x)) {
+      py += (traveler.y > traveler.destination.y) ? -1 : 1;
+    } else {
+      py += (traveler.targetAisle > traveler.y) ? 1 : -1;
+    }
   }
   else if (traveler.x !== traveler.destination.x) {
     px += (traveler.destination.x > traveler.x) ? 1 : -1;
