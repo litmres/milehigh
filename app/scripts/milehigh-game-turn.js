@@ -24,6 +24,8 @@ MileHigh.prototype.nextTurn = function (timestamp) {
  * @param  {number} incrementScoreBy
  */
 MileHigh.prototype.updateScore = function (incrementScoreBy) {
+  var playerScore = new CustomEvent('audio', {detail: 'playerScore'});
+  window.dispatchEvent(playerScore);
   this.score += incrementScoreBy;
   document.getElementById('score').textContent = this.score;
 };
@@ -159,8 +161,18 @@ MileHigh.prototype.moveTravelers = function () {
     if (t.canMove()) {
       // skip randomly
       if (t.moving) {
-        this.moveTraveler(t); 
-      } 
+        if (t.returning) {
+          this.moveTravelerToSeat(t);
+        } 
+        else if (this.currentObstacle === World.Obstacle.TURBULENCE_IMMINENT ||
+          this.currentObstacle === World.Obstacle.TURBULENCE) {
+
+          this.startTravelerTripToSeat(t);
+        } 
+        else {
+          this.moveTravelerToLavatory(t); 
+        }
+      }
       else if (this.numMovingNPOs < World.MAX_MOVING_NPOS && 
         Math.random() <= World.NPO_MOVE_PROBABILITY) {
         this.startTravelerTripToLavatory(t);

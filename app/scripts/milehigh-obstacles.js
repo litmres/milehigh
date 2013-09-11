@@ -12,8 +12,6 @@ MileHigh.prototype.initObstacles = function () {
   this.lastSnackAt = null;
 
   // These can adapt to difficulty and number of players on board
-  this.turbulenceProbability = 0.02;
-  this.snackProbability = 0.1;
   this.delayBeforeTurbulence = 5;
   this.turbulenceDuration = 3;
 };
@@ -63,7 +61,7 @@ MileHigh.prototype.hasTurbulenceWarning = function () {
   if (this.obstacleInProgress()) {
     return false;
   }
-  return Math.random() < this.turbulenceProbability;
+  return Math.random() < World.TURBULENCE_PROBABILITY;
 };
 
 MileHigh.prototype.hasTurbulence = function () {
@@ -85,7 +83,7 @@ MileHigh.prototype.hasSnacks = function () {
   if (this.obstacleInProgress()) {
     return false;
   }
-  return Math.random() < this.snackProbability;
+  return Math.random() < World.SNACK_PROBABILITY;
 };
 
 MileHigh.prototype.gameOver = function () {
