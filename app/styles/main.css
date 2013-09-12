@@ -11,6 +11,7 @@ body {
   background: -linear-gradient(top, #9cf 0%, #cbe0f5 100%);
   background: -moz-linear-gradient(top, #9cf 0%, #cbe0f5 100%);
   height:100%;
+  letter-spacing:0.15em;
 }
 
 /*
@@ -28,6 +29,8 @@ div {
   position:absolute;top:50%;left:50%;
   margin-left:-465px;margin-top:-200px;
   z-index:100;
+  text-shadow:.1em .1em .2em #111;
+
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -65,8 +68,6 @@ canvas {
   width:975px;
   height:225px;
   margin:0 auto;
-
-
   background:
   radial-gradient(black 15%, transparent 16%) 0 0,
   radial-gradient(black 15%, transparent 16%) 8px 8px,
@@ -80,20 +81,20 @@ canvas {
 .title {
   text-align: center;
   font-size:2.0em;
-  color: #00f;
+  color: #88f;
   text-transform:uppercase;
 }
 
 .instruction-panel {
   text-align: center;
-  color: #080;
+  color: #fff;
   padding:1em;;
 }
 
 .score-panel {
   margin-top: 10px;
   text-align: left;
-  color: #080;
+  color: #faa;
 }
 
 @media only screen and (min-device-width : 1000px) {
