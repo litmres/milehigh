@@ -47,7 +47,8 @@ MileHigh.prototype.renderTravelers = function (ctx, boardWidth, boardHeight) {
   var self = this;
 
   function renderTraveler (row, col, heat) {
-    MileHigh.renderSimpleSquare(ctx, row, col, heat > 0 ? self.getHeatColor(heat) : MileHigh.TRAVELER_COLOR_HEX);
+    MileHigh.renderHappyFace(ctx, row, col, heat > 0 ? self.getHeatColor(heat) : MileHigh.TRAVELER_COLOR_HEX);
+    // MileHigh.renderSimpleSquare(ctx, row, col, heat > 0 ? self.getHeatColor(heat) : MileHigh.TRAVELER_COLOR_HEX);
     //MileHigh.renderImageData(ctx, row, col, window.imgTrav);
   }
 
