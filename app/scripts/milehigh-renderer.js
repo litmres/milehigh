@@ -29,7 +29,7 @@ MileHigh.renderHappyFace = function (ctx, row, col, fillStyle) {
   ctx.fillStyle = fillStyle;
   ctx.fillRect(x, y, width, height);
   ctx.font = '21pt Webdings';
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = '#9cf';
   ctx.textAlign = 'center';
   ctx.fillText('☺', col * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2, row * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2 + 8);
 };

@@ -13,10 +13,15 @@ MileHigh.prototype.renderPlayer = function renderPlayer(ctx) {
 
   var numberOfPairs = this.world.pairedTravelers().length;
   if (numberOfPairs > 0) {
+    ctx.font = '20pt Webdings';
+    ctx.fillStyle = 'red';
+    ctx.textAlign = 'center';
+    ctx.fillText('♥', this.player.x * PIECE_SIZE + PIECE_SIZE / 2, this.player.y * PIECE_SIZE + PIECE_SIZE / 2 + 12);
+
     ctx.font = '10pt Arial';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
-    ctx.fillText(numberOfPairs + '', this.player.x * PIECE_SIZE + PIECE_SIZE / 2 + 1, this.player.y * PIECE_SIZE + PIECE_SIZE / 2 + 6);
+    ctx.fillText(numberOfPairs + '', this.player.x * PIECE_SIZE + PIECE_SIZE / 2, this.player.y * PIECE_SIZE + PIECE_SIZE / 2 + 6);
   }
 
 };
