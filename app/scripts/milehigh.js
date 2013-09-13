@@ -8,15 +8,15 @@ var MileHigh = function () {
   var TOTAL_TRAVELERS = 20;
 
   var seven6seven = [
-    '#OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO###',
-    '+OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO+#+',
-    '                                       ',
-    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO+#',
-    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO##',
-    '#OOOO# OOOOOOOOOOOOOOO OOOOOOOOOOOOOO+#',
-    '                                       ',
-    '+OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO+#+',
-    '#OOOO# OOOOOOOOOOOOOO O OOOOOOOOOOOO###',
+    '#OOOO# OOOOOO O OOOOOOOO###',
+    '+OOOO# OOOOOO O OOOOOOOO+#+',
+    '                           ',
+    '#OOOO# OOOOOOO OOOOOOOOOO+#',
+    '#OOOO# OOOOOOO OOOOOOOOOO##',
+    '#OOOO# OOOOOOO OOOOOOOOOO+#',
+    '                           ',
+    '+OOOO# OOOOOO O OOOOOOOO+#+',
+    '#OOOO# OOOOOO O OOOOOOOO###',
   ];
 
   var crj700 = [
