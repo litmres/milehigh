@@ -71,7 +71,7 @@ MileHigh.prototype.playTurn = function () {
     this.updateTurbulence();
     break;
   case World.Obstacle.SNACKS:
-    console.log('snack time!');
+    // console.log('snack time!');
     this.addSnackCarts();
     break;
   }
@@ -207,7 +207,7 @@ MileHigh.prototype.moveNPOs = function () {
   this.moveTravelers();
 
   if (this.world.isPlayerBlocked()) {
-    console.warn('Player is blocked!');
+    // console.warn('Player is blocked!');
     this.unblockPlayer();
   }
 };

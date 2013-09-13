@@ -50,13 +50,9 @@
   var imgPlayer = new Image();
   imgPlayer.src = 'images/face.gif';
 
-  var imgTrav = new Image();
-  imgTrav.src = 'images/trav.gif';
-
   imgPlayer.onload = function() {//i know, i know
     window.imgSeat = imgSeat;
     window.imgPlayer = imgPlayer;
-    window.imgTrav = imgTrav;
     start();
   };
 

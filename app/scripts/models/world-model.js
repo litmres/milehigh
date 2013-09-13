@@ -393,17 +393,17 @@ World.prototype.startTravelerTripToLavatory = function (traveler) {
   traveler.ogX = traveler.x;
   traveler.ogY = traveler.y;
   traveler.destination = this.findClosestLavatoryTo(traveler);
-  console.log('moving passenger ' + traveler.id + ' to lav at ', traveler.destination);
+  // console.log('moving passenger ' + traveler.id + ' to lav at ', traveler.destination);
   // find closest aisle to target bathroom
   traveler.targetAisle = this.getClosestAisle(traveler.destination.y);
-  console.log('target aisle: ' + traveler.targetAisle);
+  // console.log('target aisle: ' + traveler.targetAisle);
 };
 
 World.prototype.startTravelerTripToSeat = function (traveler) {
   traveler.destination = {x: traveler.ogX, y: traveler.ogY};
   // find closest aisle to target seat
   traveler.returning = true;
-  console.log('moving back to seat', traveler.destination);
+  // console.log('moving back to seat', traveler.destination);
 };
 
 /**
@@ -431,7 +431,7 @@ World.prototype.moveTravelerToSeat = function (traveler) {
     // they are back at their seat!
     traveler.moving = traveler.returning = false;
     this.numMovingNPOs--;
-    console.log('traveler back at seat!', traveler.destination);
+    // console.log('traveler back at seat!', traveler.destination);
   } else {
     this.moveTraveler(traveler);
   }
