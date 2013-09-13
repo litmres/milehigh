@@ -183,6 +183,21 @@ MileHigh.prototype.moveTravelers = function () {
 };
 
 /**
+ * In situations where a player is blocked by NPOs from moving anywhere we have
+ * to take some action to allow gameplay to continue
+ */
+MileHigh.prototype.unblockPlayer = function () {
+  // assume it's a traveler
+  this.world.travelers.filter(function (t) {
+    return t.moving;
+  }).forEach(function (t) {
+    if (this.world.isAdjacent(t, this.player)) {
+      this.world.startTravelerTripToSeat(t);
+    }
+  }, this);
+};
+
+/**
  * Handles per-turn NPO logic
  */
 MileHigh.prototype.moveNPOs = function () {
@@ -190,4 +205,9 @@ MileHigh.prototype.moveNPOs = function () {
   this.moveAttendants();
 
   this.moveTravelers();
+
+  if (this.world.isPlayerBlocked()) {
+    console.warn('Player is blocked!');
+    this.unblockPlayer();
+  }
 };

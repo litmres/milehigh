@@ -289,6 +289,25 @@ World.prototype.playerInLavatory = function () {
   return false;
 };
 
+/*
+ * Return true if player is blocked by npo
+ */
+World.prototype.isPlayerBlocked = function () {
+  // 
+  return !(this.canIMoveLeft(this.player) ||
+      this.canIMoveRight(this.player) ||
+      this.canIMoveUp(this.player) ||
+      this.canIMoveDown(this.player)
+      );
+};
+
+/**
+ * Compares location of 2 locations, returns true if they are touching
+ */
+World.prototype.isAdjacent = function (p1, p2) {
+    return (this.getCartesianDistance(p1, p2)) <= 1;
+};
+
 World.prototype.findTravelersARandomPlaceToSit = function (travelers) {
   var seatToTry,
     seatTaken,
@@ -449,6 +468,13 @@ World.prototype.moveTraveler = function (traveler) {
       py += 1;
     }
   }
+  // travelers can't enter occupied lavatory.  just send them back to seat
+  if (this.planeLayout.isLocationALavatory({x: px, y: py}) &&
+      this.player.x === px && this.player.y === py) {
+    this.startTravelerTripToSeat(traveler);
+    return;
+  }
+
   // ok to move
   traveler.x = px;
   traveler.y = py;
