@@ -28,10 +28,24 @@ MileHigh.renderHappyFace = function (ctx, row, col, fillStyle) {
 
   ctx.fillStyle = fillStyle;
   ctx.fillRect(x, y, width, height);
-  ctx.font = '21pt Webdings';
+  ctx.font = '21pt Times, Serif';
   ctx.fillStyle = '#9cf';
   ctx.textAlign = 'center';
   ctx.fillText('☺', col * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2, row * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2 + 8);
+};
+
+MileHigh.renderLavatory = function (ctx, row, col, fillStyle) {
+  var y = row * MileHigh.PIECE_SIZE + 1,
+      x = col * MileHigh.PIECE_SIZE + 1,
+      width = MileHigh.PIECE_SIZE - 2,
+      height = MileHigh.PIECE_SIZE - 2;
+
+  ctx.fillStyle = fillStyle;
+  ctx.fillRect(x, y, width, height);
+  ctx.font = '17pt Times, Serif';
+  ctx.fillStyle = 'red';
+  ctx.textAlign = 'center';
+  ctx.fillText('♥', col * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2, row * MileHigh.PIECE_SIZE + MileHigh.PIECE_SIZE / 2 + 8);
 };
 
 MileHigh.renderImageData = function (ctx, row, col, img) {
