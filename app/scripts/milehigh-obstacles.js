@@ -96,6 +96,12 @@ MileHigh.prototype.seatBeltsAlert = function () {
   window.dispatchEvent(seatbelts);
   this.world.currentObstacle = World.Obstacle.TURBULENCE_IMMINENT;
   this.turbulenceWarningAt = (new Date()).getTime();
+
+  // flash seat belt warning
+  document.getElementById('seatbelt-alert').classList.remove('hide');
+  setTimeout(function () {
+    document.getElementById('seatbelt-alert').classList.add('hide');
+  }, 1000);
 };
 
 MileHigh.prototype.updateTurbulence = function () {
